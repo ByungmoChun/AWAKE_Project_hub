@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project AWAKE(각성) — 치지직 파트너십 제안서 DRAFT v0.1</title>
+<style>
+:root{
+  --bg:#0c0e14; --panel:#12151e; --panel2:#171b27; --line:#242a3a;
+  --txt:#e9ebf2; --sub:#9aa1b4; --dim:#6b7280;
+  --vio:#a99bff; --vio-deep:#7c6cf0; --gold:#e8c476; --green:#8fd8a8; --red:#e88a8a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--txt);font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;}
+.mono{font-family:"IBM Plex Mono",monospace;}
+.wrap{max-width:960px;margin:0 auto;padding:0 32px 120px;}
+
+header{padding:72px 0 0;}
+.doc-meta{display:flex;justify-content:space-between;align-items:baseline;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:56px;}
+.doc-meta .tag{color:var(--vio);}
+
+.hero .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.2em;color:var(--vio);margin-bottom:20px;}
+.hero h1{font-size:clamp(27px,4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.34;margin-bottom:20px;}
+.hero h1 .dim{color:var(--sub);font-weight:600;}
+.hero .thesis{color:var(--sub);font-size:15.5px;max-width:800px;margin-bottom:36px;}
+.hero .thesis strong{color:var(--txt);}
+
+/* ── platform split diagram (signature) ── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px;}
+.plat{border-radius:14px;padding:26px 26px 22px;border:1px solid var(--line);background:var(--panel);position:relative;}
+.plat.master{border-color:rgba(169,155,255,.45);background:linear-gradient(180deg,rgba(124,108,240,.10),var(--panel) 55%);}
+.plat.touch{border-color:rgba(232,196,118,.45);background:linear-gradient(180deg,rgba(232,196,118,.08),var(--panel) 55%);}
+.plat.touch .p-role{color:var(--gold);}
+.plat .p-role{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--dim);}
+.plat.master .p-role{color:var(--vio);}
+.plat h3{font-size:21px;font-weight:800;letter-spacing:-.01em;margin:6px 0 4px;}
+.plat .p-sub{font-size:13px;color:var(--sub);margin-bottom:18px;}
+.chipset{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{font-size:12.5px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);}
+.chip.core{border-color:rgba(169,155,255,.5);color:var(--vio);}
+.chip.later{border-style:dashed;color:var(--dim);}
+.bridge{grid-column:1/3;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;color:var(--dim);padding:4px 0 0;}
+.bridge b{color:var(--gold);font-weight:600;}
+.hero-note{font-size:12.5px;color:var(--dim);margin-top:12px;}
+
+section{margin-top:88px;}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
+.sec-head .no{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--vio);letter-spacing:.15em;}
+.sec-head h2{font-size:23px;font-weight:800;letter-spacing:-.015em;}
+.sec-lede{color:var(--sub);margin-bottom:30px;max-width:800px;}
+.sec-lede strong{color:var(--txt);}
+
+/* ── benchmark table ── */
+.bench{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.bench-row{display:grid;grid-template-columns:210px 90px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.bench-row:last-child{border-bottom:none;}
+.bench-row.head{background:var(--panel2);}
+.bench-row .cell{padding:15px 18px;font-size:13.5px;}
+.bench-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--dim);padding:11px 18px;}
+.bench-row .f{font-weight:700;border-right:1px solid var(--line);}
+.bench-row .f .fs{display:block;font-size:11.5px;color:var(--dim);font-weight:400;margin-top:2px;}
+.bench-row .v{border-right:1px solid var(--line);display:flex;align-items:center;}
+.bench-row .d{color:var(--sub);}
+.bench-row .d strong{color:var(--txt);}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.06em;padding:3px 9px;border-radius:99px;white-space:nowrap;}
+.badge.adopt{color:var(--green);border:1px solid rgba(143,216,168,.4);}
+.badge.remix{color:var(--gold);border:1px solid rgba(232,196,118,.45);}
+.badge.skip{color:var(--dim);border:1px solid var(--line);}
+
+.diffbox{border:1px solid rgba(169,155,255,.3);background:rgba(169,155,255,.05);border-radius:14px;padding:26px 30px;margin-top:22px;}
+.diffbox .mono-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;color:var(--vio);display:block;margin-bottom:10px;}
+.diffbox p{color:var(--sub);font-size:14.5px;}
+.diffbox p strong{color:var(--txt);}
+
+/* ── rationale cards ── */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px;}
+.why .w{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 20px;}
+.why .w .wk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--vio);margin-bottom:8px;}
+.why .w h4{font-size:14.5px;font-weight:800;margin-bottom:6px;}
+.why .w p{font-size:12.5px;color:var(--sub);line-height:1.65;}
+
+/* ── feature matrix ── */
+.matrix{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.mx-row{display:grid;grid-template-columns:1fr 120px 120px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.mx-row:last-child{border-bottom:none;}
+.mx-row.head{background:var(--panel2);}
+.mx-row .cell{padding:13px 16px;font-size:13px;border-right:1px solid var(--line);}
+.mx-row .cell:last-child{border-right:none;}
+.mx-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--dim);padding:10px 16px;}
+.mx-row .fn{font-weight:700;}
+.mx-row .pv{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:11px;}
+.pv .on{color:var(--vio);font-weight:700;}
+.pv .semi{color:var(--gold);}
+.pv .off{color:#3d4354;}
+.mx-row .nt{color:var(--sub);font-size:12.5px;}
+
+/* ── user types ── */
+.users{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.users .u{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;}
+.users .u .uk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--vio);margin-bottom:8px;}
+.users .u h4{font-size:16px;font-weight:800;margin-bottom:8px;}
+.users .u p{font-size:13px;color:var(--sub);}
+.users .u p strong{color:var(--txt);}
+.flow-note{margin-top:16px;padding:14px 18px;border-radius:10px;background:rgba(143,216,168,.06);border:1px solid rgba(143,216,168,.22);font-size:13.5px;color:var(--txt);}
+.flow-note .mono-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--green);display:block;margin-bottom:4px;}
+
+/* ── IA tree ── */
+.ia{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ia .tree{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 26px;}
+.ia .tree h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--vio);margin-bottom:14px;}
+.ia ul{list-style:none;}
+.ia li{font-size:13.5px;padding:5px 0;color:var(--txt);border-bottom:1px dashed rgba(36,42,58,.7);}
+.ia li:last-child{border-bottom:none;}
+.ia li .sub-i{color:var(--dim);font-size:12px;display:block;padding-left:14px;}
+.ia li em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--dim);letter-spacing:.06em;margin-left:8px;}
+
+/* ── modules ── */
+.mod{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:13px;display:grid;grid-template-columns:64px 1fr;gap:18px;}
+.mod .mno{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;color:var(--vio-deep);padding-top:2px;}
+.mod h3{font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em;}
+.mod h3 .dep{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--gold);border:1px solid rgba(232,196,118,.4);border-radius:99px;padding:2px 8px;margin-left:9px;vertical-align:2px;letter-spacing:.05em;font-weight:500;}
+.mod p{color:var(--sub);font-size:13.5px;}
+.mod p strong{color:var(--txt);}
+
+/* ── roadmap ── */
+.phase{display:grid;grid-template-columns:120px 1fr;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-bottom:12px;}
+.phase .pk{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--vio);font-weight:600;line-height:1.5;}
+.phase .pk .pd{display:block;font-size:9.5px;color:var(--dim);font-weight:400;margin-top:3px;letter-spacing:.05em;}
+.phase h4{font-size:15px;font-weight:800;margin-bottom:5px;}
+.phase p{font-size:13px;color:var(--sub);}
+.phase p strong{color:var(--txt);}
+.phase.hot{border-color:rgba(232,196,118,.4);}
+
+/* ── risks ── */
+.risk{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.risk-row{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.risk-row:last-child{border-bottom:none;}
+.risk-row .cell{padding:16px 20px;font-size:13.5px;}
+.risk-row .rn{font-weight:700;border-right:1px solid var(--line);}
+.risk-row .rd{color:var(--sub);}
+.risk-row .rd strong{color:var(--txt);}
+
+/* ── act structure (2막) ── */
+.acts{display:grid;grid-template-columns:1fr 230px 1fr;gap:14px;margin-bottom:26px;align-items:stretch;}
+.act{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;}
+.act.a1{border-color:rgba(169,155,255,.45);background:linear-gradient(180deg,rgba(124,108,240,.08),var(--panel) 60%);}
+.act.a2{border-color:rgba(232,196,118,.4);background:linear-gradient(180deg,rgba(232,196,118,.07),var(--panel) 60%);}
+.act .ak{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;margin-bottom:8px;}
+.act.a1 .ak{color:var(--vio);} .act.a2 .ak{color:var(--gold);}
+.act h3{font-size:18px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em;}
+.act .asub{font-size:12.5px;color:var(--sub);margin-bottom:14px;}
+.act ul{list-style:none;}
+.act li{font-size:13px;color:var(--txt);padding:4px 0;border-bottom:1px dashed rgba(36,42,58,.7);}
+.act li:last-child{border-bottom:none;}
+.act li b{color:var(--vio);} .act.a2 li b{color:var(--gold);}
+.gate{background:var(--panel2);border:1px dashed var(--dim);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;justify-content:center;text-align:center;}
+.gate .gk{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.18em;color:var(--dim);margin-bottom:8px;}
+.gate h4{font-size:14.5px;font-weight:800;margin-bottom:6px;}
+.gate p{font-size:11.5px;color:var(--sub);line-height:1.6;}
+.gate .warn{margin-top:10px;font-size:10.5px;color:var(--gold);font-family:"IBM Plex Mono",monospace;letter-spacing:.04em;}
+/* ── duo comparison table ── */
+.duo{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:8px;}
+.duo-row{display:grid;grid-template-columns:170px 1fr 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.duo-row:last-child{border-bottom:none;}
+.duo-row.head{background:var(--panel2);}
+.duo-row .cell{padding:14px 18px;font-size:13px;border-right:1px solid var(--line);color:var(--sub);}
+.duo-row .cell:last-child{border-right:none;}
+.duo-row .cell strong{color:var(--txt);}
+.duo-row .lbl{font-weight:700;color:var(--txt);font-size:12.5px;}
+.duo-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;padding:11px 18px;}
+.duo-row.head .c1{color:var(--vio);} .duo-row.head .c2{color:var(--gold);}
+/* ── dual stat diagram ── */
+.statpair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px;}
+.statcol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 26px;}
+.statcol.s1{border-color:rgba(169,155,255,.4);} .statcol.s2{border-color:rgba(232,196,118,.4);}
+.statcol .sk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;margin-bottom:6px;}
+.statcol.s1 .sk{color:var(--vio);} .statcol.s2 .sk{color:var(--gold);}
+.statcol h4{font-size:16px;font-weight:800;margin-bottom:3px;}
+.statcol .ssub{font-size:12px;color:var(--sub);margin-bottom:14px;}
+.srow{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:6px 0;border-bottom:1px dashed rgba(36,42,58,.7);font-size:12.5px;}
+.srow:last-child{border-bottom:none;}
+.srow .sn{font-weight:700;color:var(--txt);}
+.srow .sd{color:var(--dim);font-size:11.5px;line-height:1.55;}
+.stat-note{font-size:12.5px;color:var(--dim);margin-top:12px;}
+
+/* ── concept art figures ── */
+.figwrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:20px 0 8px;}
+.figwrap img{display:block;width:100%;}
+.fig3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 8px;}
+.fig3 .fcell{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);}
+.fig3 img{display:block;width:100%;}
+.fig3 .fl{padding:10px 14px;font-size:11.5px;color:var(--sub);line-height:1.6;border-top:1px solid var(--line);}
+.fig3 .fl b{color:var(--gold);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;display:block;margin-bottom:3px;}
+@media (max-width:760px){.fig3{grid-template-columns:1fr;}}
+
+/* ── cover (title page) ── */
+.cover{min-height:94vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0 40px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+.cover .c-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);margin-bottom:46px;}
+.cover .c-orb{width:64px;height:64px;border-radius:50%;margin-bottom:34px;background:radial-gradient(circle at 35% 30%, #cfc5ff, var(--vio-deep));box-shadow:0 0 22px rgba(169,155,255,.55), 0 0 0 4px rgba(232,196,118,.5);}
+.cover h1{font-size:clamp(38px,6vw,62px);font-weight:800;letter-spacing:-.025em;line-height:1.12;margin-bottom:14px;}
+.cover h1 .kr{color:var(--gold);font-weight:700;}
+.cover .c-sub{font-size:clamp(16px,2.2vw,21px);font-weight:600;color:var(--sub);letter-spacing:.01em;margin-bottom:14px;}
+.cover .c-sub b{color:var(--txt);}
+.cover .c-badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.15em;color:var(--red);border:1px solid rgba(240,138,138,.45);border-radius:99px;padding:4px 14px;margin-bottom:52px;width:fit-content;}
+.cover .c-why{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:880px;}
+.cover .why-box{border-top:1px solid var(--line);padding-top:16px;}
+.cover .why-box .wl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--vio);margin-bottom:9px;}
+.cover .why-box.gold .wl{color:var(--gold);}
+.cover .why-box p{font-size:12px;color:var(--dim);line-height:1.8;}
+.cover .why-box p strong{color:var(--sub);font-weight:700;}
+.cover .c-foot{margin-top:56px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);}
+@media (max-width:760px){.cover .c-why{grid-template-columns:1fr;}}
+
+/* ── ecosystem map table ── */
+.map{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:8px;}
+.map-row{display:grid;grid-template-columns:190px 150px 160px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.map-row:last-child{border-bottom:none;}
+.map-row.head{background:var(--panel2);}
+.map-row .cell{padding:12px 15px;font-size:12.8px;border-right:1px solid var(--line);color:var(--sub);}
+.map-row .cell:last-child{border-right:none;}
+.map-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--dim);padding:10px 15px;}
+.map-row .b1{font-weight:700;color:var(--txt);}
+.map-row .cell strong{color:var(--txt);}
+.map-row .app{color:var(--vio);font-weight:700;}
+/* ── insight cards ── */
+.insight{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+.insight .w{background:var(--panel);border:1px solid rgba(143,216,168,.3);border-radius:12px;padding:20px;}
+.insight .w .wk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--green);margin-bottom:8px;}
+.insight .w h4{font-size:14px;font-weight:800;margin-bottom:6px;color:var(--txt);}
+.insight .w p{font-size:12.3px;color:var(--sub);line-height:1.65;}
+.insight .w p strong{color:var(--txt);}
+@media (max-width:760px){.map-row{grid-template-columns:1fr 1fr;} .insight{grid-template-columns:1fr;}}
+
+/* ── genesis (단계적 탄생) ── */
+.genesis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0 10px;}
+.gstate{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 13px 16px;text-align:center;}
+.gstate.final{border-color:rgba(232,196,118,.55);background:linear-gradient(180deg,rgba(232,196,118,.09),var(--panel) 60%);}
+.orb{width:52px;height:52px;border-radius:50%;margin:0 auto 12px;}
+.orb.o0{border:2px dashed #4a5063;background:repeating-linear-gradient(45deg,transparent 0 4px,rgba(107,114,128,.15) 4px 6px);}
+.orb.o1{border:1px solid var(--line);background:conic-gradient(var(--vio-deep) 0 25%, #1b2030 25% 100%);}
+.orb.o2{border:1px solid var(--line);background:conic-gradient(var(--vio-deep) 0 55%, #1b2030 55% 100%);}
+.orb.o3{border:1px solid rgba(169,155,255,.5);background:conic-gradient(var(--vio-deep) 0 90%, #1b2030 90% 100%);}
+.orb.o4{background:radial-gradient(circle at 35% 30%, #cfc5ff, var(--vio-deep));box-shadow:0 0 16px rgba(169,155,255,.55), 0 0 0 3px rgba(232,196,118,.55);}
+.gstate .gk2{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;color:var(--dim);margin-bottom:4px;}
+.gstate.final .gk2{color:var(--gold);}
+.gstate h5{font-size:12.5px;font-weight:800;margin-bottom:5px;color:var(--txt);}
+.gstate p{font-size:10.8px;color:var(--dim);line-height:1.55;}
+/* ── FOR/AS ── */
+.foras{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 6px;}
+.fa{border-radius:12px;padding:20px 22px;border:1px solid;}
+.fa.ok{border-color:rgba(143,216,168,.35);background:rgba(143,216,168,.05);}
+.fa.no{border-color:rgba(240,138,138,.38);background:rgba(240,138,138,.05);}
+.fa .fk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.15em;display:block;margin-bottom:7px;}
+.fa.ok .fk{color:var(--green);} .fa.no .fk{color:var(--red);}
+.fa h5{font-size:14.5px;font-weight:800;margin-bottom:7px;}
+.fa p{font-size:12.8px;color:var(--sub);line-height:1.65;}
+.fa p strong{color:var(--txt);}
+/* ── forbid (방송 문법) ── */
+.forbid{border:1px solid rgba(240,138,138,.32);border-radius:12px;background:rgba(240,138,138,.04);padding:24px 28px;margin-top:16px;}
+.forbid .mono-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;color:var(--red);display:block;margin-bottom:10px;}
+.forbid p{font-size:13.5px;color:var(--sub);padding:6px 0;border-bottom:1px dashed rgba(240,138,138,.15);}
+.forbid p:last-of-type{border-bottom:none;}
+.forbid p strong{color:var(--txt);}
+.forbid .clause{margin-top:12px;padding:11px 14px;border-radius:8px;background:rgba(240,138,138,.08);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--txt);letter-spacing:.02em;}
+
+footer{margin-top:100px;border-top:1px solid var(--line);padding-top:20px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim);letter-spacing:.08em;line-height:2;}
+
+@media (max-width:760px){
+  .wrap{padding:0 20px 80px;}
+  .split{grid-template-columns:1fr;}
+  .bridge{grid-column:1;}
+  .why,.users,.ia{grid-template-columns:1fr;}
+  .bench-row{grid-template-columns:1fr;}
+  .bench-row .f,.bench-row .v{border-right:none;border-bottom:1px dashed var(--line);}
+  .mx-row{grid-template-columns:1fr 60px 60px;}
+  .mx-row .nt{display:none;}
+  .mod,.phase{grid-template-columns:1fr;gap:6px;}
+  .risk-row{grid-template-columns:1fr;}
+  .risk-row .rn{border-right:none;border-bottom:1px solid var(--line);}
+}
+</style>
+<style>
+.mini-cover{padding:70px 0 46px;border-bottom:1px solid var(--line);margin-bottom:34px;}
+.mini-cover .c-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);margin-bottom:26px;}
+.mini-cover h1{font-size:clamp(28px,4.2vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.18;margin-bottom:10px;}
+.mini-cover h1 .kr{color:var(--gold);font-weight:700;}
+.mini-cover .c-sub{font-size:16px;font-weight:600;color:var(--sub);margin-bottom:16px;}
+.mini-cover .c-note{font-size:12px;color:var(--dim);line-height:1.75;max-width:780px;}
+.mini-cover .c-note strong{color:var(--sub);}
+.mini-foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:12.5px;line-height:1.7;}
+.cmp th,.cmp td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;text-align:left;}
+.cmp th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;color:var(--dim);background:rgba(255,255,255,.02);font-weight:600;}
+.cmp td.opt{white-space:nowrap;font-weight:700;color:var(--txt);}
+.cmp tr.pick td{background:rgba(122,255,178,.045);}
+.cmp tr.pick td.opt{color:#7dd8a0;}
+.cmp tr.kill td{opacity:.62;}
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;padding:3px 10px;border-radius:3px;margin-left:8px;vertical-align:2px;}
+.badge.dec{color:#7dd8a0;border:1px solid rgba(125,216,160,.45);background:rgba(125,216,160,.07);}
+.badge.rec{color:var(--gold);border:1px solid rgba(232,196,118,.45);background:rgba(232,196,118,.07);}
+.decision{border:1px solid rgba(125,216,160,.4);background:rgba(125,216,160,.05);border-radius:8px;padding:16px 18px;margin:16px 0 6px;font-size:13px;line-height:1.85;}
+.decision .dk{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;color:#7dd8a0;margin-bottom:8px;}
+.decision.amber{border-color:rgba(232,196,118,.4);background:rgba(232,196,118,.05);}
+.decision.amber .dk{color:var(--gold);}
+</style>
+</head>
+<body>
+<a href="../index.html" style="position:fixed;top:14px;left:16px;z-index:99;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:#e8c476;text-decoration:none;background:rgba(10,10,16,.85);padding:6px 12px;border:1px solid rgba(232,196,118,.35);border-radius:4px;">← PROJECT HUB</a>
+<div class="wrap">
+
+<div class="mini-cover">
+  <div class="c-eyebrow">SUPERSTORY &nbsp;×&nbsp; LVNEXUS &nbsp;—&nbsp; PROPOSAL TO NAVER CHZZK &nbsp;·&nbsp; DRAFT</div>
+  <h1>Project AWAKE <span class="kr">(각성)</span></h1>
+  <div class="c-sub">버추얼 아이돌 오디션 — 치지직 파트너십 제안서 DRAFT v0.1</div>
+  <div class="c-note"><strong>한 줄 제안</strong> — 치지직이 이미 지어놓은 버튜버 스튜디오와 이미 확보한 트래픽 위에,
+  <strong>"떠날 수 없는 스타를 계속 낳는 공급 파이프라인"</strong>을 얹는 프로젝트입니다.
+  트래픽은 시즌마다 오지만, 파이프라인은 남습니다.<br><br>
+  <span style="color:var(--gold)">※ 내부 검토용 드래프트 — 비용 산출서·계약 조건 상세는 별도 문서로 후속. 외부 발신 전 민감 표현 최종 검수 필요.</span></div>
+</div>
+
+<section>
+  <div class="sec-head"><span class="no">01</span><h2>제안 요약 — 세 회사가 각자 가장 잘하는 것</h2></div>
+  <table class="cmp">
+    <tr><th style="width:150px;">파트너</th><th>투입</th><th>역할</th></tr>
+    <tr><td class="opt">네이버 치지직</td><td>제작비 · 버튜버 전용 스튜디오(국내외) · 트래픽 · 프로모션</td><td>방송 플랫폼 · 생중계 · 데뷔조 매니지먼트</td></tr>
+    <tr><td class="opt">슈퍼스토리</td><td>24캐릭터 IP·세계관·시나리오(신작 웹툰 연동) · 투표 앱(젬·스탯·NFT 원장) · 리스크 관리 체계</td><td>쇼 기획 총괄 · 캐릭터 IP 홀더 · 팬덤 플랫폼 운영</td></tr>
+    <tr><td class="opt">LVNEXUS</td><td>AI 보컬 심사 엔진(수십 년 오디션 노하우 기반 8축 분석) · 오디션 제작 경험(박선주 프로듀서)</td><td>예선 심사 자동화 · 트레이닝 툴 · 음악 프로듀싱</td></tr>
+  </table>
+  <p class="sec-lede" style="margin-top:10px;"><strong>쇼의 심장</strong> — 봉인된 24개의 캐릭터는 단 한 번, 단 한 사람의 목소리로만 깨어납니다.
+  실력은 AI가 재고, 매력은 팬이 키웁니다. 1막(전초전)은 24캐릭터의 주인을 찾는 캐스팅 레이스,
+  2막(결전)은 각성한 24인이 데뷔 5석을 다투는 서바이벌 — 그리고 데뷔 5인은 2D에서 3D로 승격합니다.
+  예선은 심사위원 없이 AI 스코어 + 팬 투표로 진행되어 <strong>예선 제작비가 구조적으로 절감</strong>되며,
+  버추얼 MC가 앱 화면을 송출하는 게임방송형 문법으로 <strong>콘텐츠 영역을 앱이 채웁니다</strong>.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="no">02</span><h2>치지직이 얻는 것 — 6층 구조</h2></div>
+  <table class="cmp">
+    <tr><th style="width:56px;">층</th><th style="width:210px;">이익</th><th>내용</th></tr>
+    <tr><td class="opt">1</td><td class="opt">이적 불가능한 탤런트</td><td>캐릭터 IP는 프로젝트에, 소울은 캐릭터에 영구 결속, 팬덤 원장은 앱에 —
+    플랫폼 최초의 <b>구조적으로 떠날 수 없는 스타</b> 클래스. 시즌이 끝나도 파이프라인이 남습니다.</td></tr>
+    <tr><td class="opt">2</td><td class="opt">스튜디오 가동 · 기술 시연</td><td>기투자 버튜버 전용 스튜디오의 텐트폴 콘텐츠 + 시즌 전체가 전 국민 대상
+    "치지직 스튜디오에서 버튜버가 만들어지는 과정" 시연 — 시즌 후 B2B 유치(타 기획사·개인세)의 쇼룸.</td></tr>
+    <tr><td class="opt">3</td><td class="opt">버티컬 한 층의 볼륨</td><td>데뷔 5인 + 각성 19인 + 탈락자 버튜버 트랙(IP 풀 24+α) — <b>전원 치지직 네이티브로 방송 개시</b>.
+    버튜버 카테고리를 '점'이 아니라 '면'으로 확장.</td></tr>
+    <tr><td class="opt">4</td><td class="opt">검증 완료 탤런트 인도</td><td>데뷔조는 4단계 검증 게이트(서약→서류→정밀 평판 조회→인계 실사)를 통과하고
+    팬덤 화력이 투표 데이터로 정량 증명된 상태로 계약 테이블에 도착 — <b>탤런트 획득 리스크와 육성 비용의 외주화</b>.</td></tr>
+    <tr><td class="opt">5</td><td class="opt">팬덤형 과금 레일 실증</td><td>도네이션(치즈)을 넘어 젬·스탯·꾸미기·NFT라는 아이돌 팬덤 BM이
+    치지직 트래픽 위에서 작동함을 실증 — 방송 연동 구간 매출 셰어로 신규 수익원. 포맷 자체가 시즌제·국가별 복제 가능(해외 스튜디오 연계).</td></tr>
+    <tr><td class="opt">6</td><td class="opt">신작 IP 탄생 플랫폼</td><td>24캐릭터는 제작 중인 <b>신작 웹툰 3작품의 주인공들</b> — 스타의 탄생과 IP의 탄생을 동시에 중계하는
+    플랫폼 지위. §04 참조.</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="sec-head"><span class="no">03</span><h2>"투자 → 받는 것" 계산표</h2></div>
+  <p class="sec-lede">비용 상세는 별도 산출서(네이버 스튜디오 사용 · 렌탈비 제외 순수 제작비 기준)로 제출하며, 본 표는 리턴의 구조를 요약합니다.</p>
+  <table class="cmp">
+    <tr><th style="width:230px;">받는 것</th><th>성격</th></tr>
+    <tr><td class="opt">텐트폴 시즌 콘텐츠</td><td>파일럿~레귤러 시즌 독점 생중계(회차 편성 협의) + 24회의 각성 모먼트 + 3D 승격 무대(시즌 클라이맥스)</td></tr>
+    <tr><td class="opt">AWAKE 세계관 라이브 영구 홈</td><td>데뷔조 포함 세계관 캐릭터 전원의 라이브 방송 치지직 독점 — 비데뷔 19인 포함</td></tr>
+    <tr><td class="opt">데뷔조 5인 장기 독점 라이선스</td><td>방송·매니지먼트 카테고리 장기 독점(경제 효과는 보유와 동등) + 2차 사업(음원·굿즈·광고) 수익 지분</td></tr>
+    <tr><td class="opt">하자담보 · 귀책 보전</td><td>인계 후 일정 기간 내 검증 범위 사유 발각 시 책임 부담 + 소울 귀책 시 대체 캐릭터 라이선스 보전</td></tr>
+    <tr><td class="opt">투표 무결성 보증</td><td>디바이스 무결성 검증 + 투표 전량 원장 기록 + <b>제3자 감사 수용</b> — 조작 시비가 플랫폼 브랜드에 닿지 않도록 설계 단계부터 차단</td></tr>
+    <tr><td class="opt">위기 공동 대응</td><td>실격·폭로 등 중대 사안의 치지직 지정 창구 즉시 통보 + 협의권</td></tr>
+    <tr><td class="opt">차기 시즌 · 글로벌 우선권</td><td>차기 시즌 및 해외 스튜디오 활용 글로벌 시즌의 우선협상권</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="sec-head"><span class="no">04</span><h2>트랜스미디어 — 오디션이 IP를 데뷔시킨다</h2></div>
+  <p class="sec-lede">24캐릭터는 오디션용 즉석 캐릭터가 아니라, 시나리오·서사가 완성된 <strong>제작 중 신작 웹툰 3작품의 주인공들</strong>입니다
+  (스포츠 액션·라이딩 청춘물 등 — 작품 상세는 미팅 시 공유). 세상에 한 번도 공개된 적 없는 존재이므로
+  "봉인된 캐릭터를 세상이 처음 만나는 방법이 이 오디션"이라는 순도 100%의 각성 서사가 성립합니다.</p>
+  <table class="cmp">
+    <tr><th style="width:170px;">단계</th><th>전개 (기본안: 프롤로그 동기화 — B′)</th></tr>
+    <tr><td class="opt">시즌 중</td><td>각성과 동기화된 경량 콘텐츠 — 캐릭터당 <b>프롤로그 1~2화 + 인터랙티브 특별편</b>(플레이툰: 봉인 해제를 독자가 직접 조작).
+    방송(치지직) ↔ 웹툰 ↔ 투표 앱의 삼각 트래픽 순환. "내가 응원하는 캐릭터가 깨어나야 그 작품이 열린다."</td></tr>
+    <tr><td class="opt">시즌 후</td><td>정규 연재 개시 — <b>데뷔 5인 크로스오버</b>(서로 다른 작품의 주인공들이 한 팀이 되는 서사:
+    "팬 투표가 웹툰의 주인공 라인업을 결정했다") + 개별 작품 순차 연재. 데뷔 그룹은 음원 + 방송 + 연재를 동시에 가진 IP가 됩니다.</td></tr>
+    <tr><td class="opt">플랫폼 효과</td><td>웹툰 연재 개시일에 이미 팬덤·투표 이력·애착이 형성된 상태 — 신작 콜드 스타트를 오디션이 해결.
+    치지직은 <b>스타와 IP가 동시에 태어나는 순간의 독점 중계 플랫폼</b>이 됩니다.</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="sec-head"><span class="no">05</span><h2>신뢰와 안전 — 리스크에 돈을 쓰는 파트너</h2></div>
+  <table class="cmp">
+    <tr><th style="width:190px;">영역</th><th>체계 (전용 규정 문서 보유 — 요청 시 발췌 공유)</th></tr>
+    <tr><td class="opt">투표 무결성</td><td>다계정·앱 복제·에뮬레이터 어뷰징의 실전 사례 분석 기반 디바이스 무결성 검증 +
+    전량 원장 기록(검증 가능성) — 오디션 투표 불신의 시대에 "감사받을 수 있는 투표"를 설계 원칙으로.</td></tr>
+    <tr><td class="opt">소울(출연자) 검증</td><td>4단계 검증 게이트: 서약(전원) → 서류(상위 풀) → 정밀 평판 조회(결선 전원, 전문 외주 병행) → 인계 실사(데뷔조).
+    실격 기준 3등급 사전 성문화·개막 시 공표, 공적 기록주의(여론재판 배제), 차순위 승계 규정 완비.</td></tr>
+    <tr><td class="opt">출연자 보호</td><td>디지털 신상 보호 프로그램(전문 업체 지원) · 내부자 접근 통제(NDA·need-to-know) · 심리 지원 프로그램(탈락자 포함).</td></tr>
+    <tr><td class="opt">미성년 보호</td><td>대중문화예술산업발전법 완전 준수 — 청소년보호책임자 지정, 활동 시간 원장 시스템, 심야 편성 배제 설계,
+    표준 부속합의서. 연령 정책: 도전은 전연령, 전속 계약은 만 15세 이상.</td></tr>
+    <tr><td class="opt">세계관 보호</td><td>버튜버 문화 규범("캐릭터 = 사람")을 존중하는 설계 헌법 5원칙을 개막 전 매니페스토로 공표 —
+    코어 버튜버 팬덤의 수용성을 선제 확보.</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="sec-head"><span class="no">06</span><h2>다음 단계</h2></div>
+  <p class="sec-lede">① 본 드래프트 기반 사업 미팅 — 편성 스케일(파일럿/레귤러) · 스튜디오 사용 범위 · 치지직 연동 수준(딥링크~투표 오버레이) 협의
+  ② 비용 산출서 제출 — 스튜디오 렌탈비 제외 순수 제작비 + 기술비, "투자 → 받는 것" 계산 확정
+  ③ 계약 조건 협의 — 독점·라이선스·수익 배분·하자담보 텀시트
+  ④ 파일럿 편성 확정.</p>
+</section>
+
+<div class="mini-foot">PROJECT AWAKE(각성) · 치지직 파트너십 제안서 DRAFT v0.1 &nbsp;·&nbsp; 2026.07.10 &nbsp;·&nbsp; SUPERSTORY × LVNEXUS &nbsp;·&nbsp; 내부 검토용 — 발신 전 최종 검수 필요</div>
+
+</div>
+</body>
+</html>

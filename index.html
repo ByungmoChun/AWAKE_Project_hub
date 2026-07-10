@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project AWAKE(각성) — Project Hub</title>
+<style>
+:root{
+  --bg:#0a0a10; --card:#121219; --card2:#16161f; --line:#26262f;
+  --txt:#eef0f6; --sub:#b9bcc9; --dim:#7a7d8c; --gold:#e8c476; --violet:#a99bf0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--txt);font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') center 28%/cover no-repeat;}
+.hero-veil{position:absolute;inset:0;background:
+  linear-gradient(180deg, rgba(10,10,16,.42) 0%, rgba(10,10,16,.62) 55%, var(--bg) 96%);}
+.hero-in{position:relative;width:min(1160px,92%);margin:0 auto;padding:120px 0 56px;}
+.eyebrow{font-size:11px;letter-spacing:.26em;color:var(--gold);margin-bottom:18px;text-shadow:0 1px 8px rgba(0,0,0,.8);}
+.hero h1{font-size:clamp(38px,6vw,64px);font-weight:800;letter-spacing:-.02em;line-height:1.05;text-shadow:0 2px 24px rgba(0,0,0,.7);}
+.hero h1 .kr{color:var(--gold);}
+.hero .tag{margin-top:14px;font-size:clamp(14px,1.8vw,18px);font-weight:600;color:#e6e2f2;text-shadow:0 1px 12px rgba(0,0,0,.8);}
+.hero .badge{display:inline-block;margin-top:20px;font-size:10.5px;letter-spacing:.18em;color:#ffb3b3;border:1px solid rgba(255,120,120,.5);background:rgba(80,10,10,.35);padding:6px 14px;border-radius:4px;backdrop-filter:blur(4px);}
+
+/* ── BODY ── */
+.wrap{width:min(1160px,92%);margin:0 auto;padding:34px 0 70px;}
+.grp{margin-top:38px;}
+.grp-head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;}
+.grp-head .no{font-size:12px;letter-spacing:.2em;color:var(--gold);}
+.grp-head h2{font-size:19px;font-weight:800;letter-spacing:-.01em;}
+.grp-head .d{font-size:12px;color:var(--dim);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px 18px;transition:border-color .15s, transform .15s, background .15s;position:relative;}
+.card:hover{border-color:rgba(232,196,118,.55);background:var(--card2);transform:translateY(-2px);}
+.card .k{font-size:10px;letter-spacing:.16em;color:var(--violet);margin-bottom:9px;}
+.card h3{font-size:16.5px;font-weight:700;margin-bottom:7px;line-height:1.35;}
+.card p{font-size:12px;color:var(--sub);line-height:1.65;min-height:38px;}
+.card .m{margin-top:12px;display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);}
+.card .v{color:var(--gold);}
+.card.hero-card{grid-column:1/-1;background:linear-gradient(135deg,#15121f 0%,#101018 100%);border-color:rgba(232,196,118,.35);}
+.card.hero-card h3{font-size:19px;}
+.pill{display:inline-block;font-size:9.5px;letter-spacing:.12em;padding:2px 8px;border-radius:3px;margin-left:8px;vertical-align:2px;border:1px solid var(--line);color:var(--dim);}
+.pill.core{color:var(--gold);border-color:rgba(232,196,118,.4);}
+.pill.new{color:#8fe0ae;border-color:rgba(143,224,174,.4);}
+foot{display:block;}
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:10.5px;letter-spacing:.1em;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-veil"></div>
+  <div class="hero-in">
+    <div class="eyebrow mono">SUPERSTORY &nbsp;×&nbsp; LVNEXUS &nbsp;×&nbsp; NAVER CHZZK &nbsp;—&nbsp; VIRTUAL AUDITION PROJECT</div>
+    <h1>Project AWAKE <span class="kr">(각성)</span></h1>
+    <div class="tag">캐릭터는 단 한 번, 단 한 사람에 의해서만 깨어난다. — 실력은 AI가 재고, 매력은 팬이 키운다.</div>
+    <div class="badge mono">INTERNAL — 프로젝트 관련자 외 공유 금지</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="grp">
+    <div class="grp-head"><span class="no mono">01</span><h2>기획 — 세분화 문서</h2><span class="d">바이블을 주제별로 잘라 읽는다</span></div>
+    <div class="grid">
+      <a class="card" href="docs/benchmark.html">
+        <div class="k mono">RESEARCH</div>
+        <h3>벤치마크 &amp; 플랫폼 전략</h3>
+        <p>LiNC 기능 분해 · 국내 투표 앱 생태계 전수 지도(음방 6사·오디션·팬덤 앱) · 어뷰징 실사례 · 웹/앱 역할 분담.</p>
+        <div class="m mono"><span>바이블 §01–02 발췌</span><span class="v">v0.5</span></div>
+      </a>
+      <a class="card" href="docs/concept.html">
+        <div class="k mono">GAME DESIGN</div>
+        <h3>오디션 컨셉 기획 <span class="pill core">v0.3</span></h3>
+        <p>게임 구조(2막·봉인/각성·단계적 탄생·마지막 붓·승격) · 유저 타입 · IA 골격 · 핵심 모듈 8. 전초전/결전 구도와 2D→3D 승격 반영.</p>
+        <div class="m mono"><span>바이블 §03–06 재구성</span><span class="v">UPDATED 07.09</span></div>
+      </a>
+      <a class="card" href="docs/roadmap.html">
+        <div class="k mono">ROADMAP</div>
+        <h3>단계 로드맵 &amp; 미결 사항</h3>
+        <p>P0 준비 → P1 전초전 → P2 결전 → P3 확장 로드맵 + 미결정·선행 확인 ⑪건(각성 모먼트 편성 배치 포함).</p>
+        <div class="m mono"><span>바이블 §07–08 발췌</span><span class="v">v0.5</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="grp">
+    <div class="grp-head"><span class="no mono">02</span><h2>규정 — 헌법 · 참가 · 검증</h2><span class="d">지켜야 성립하는 것들</span></div>
+    <div class="grid">
+      <a class="card" href="docs/policy.html">
+        <div class="k mono">CONSTITUTION &amp; POLICY</div>
+        <h3>설계 헌법 &amp; 참가 규정 — 소울 검증·보호 통합본 <span class="pill core">v0.2</span></h3>
+        <p>PART 1: 헌법 5원칙 · 기존 버튜버 조항(티어형 활동 전속 확정) · 전생 공개 수위. PART 2: 리스크 매트릭스 · 검증 게이트 G0~G3 · 실격 기준 3등급(RED/YELLOW/GREEN) · 클린업 · 미성년 특칙 · 위기 대응 매뉴얼.</p>
+        <div class="m mono"><span>§01–13 · 2부 구성</span><span class="v">UPDATED 07.10</span></div>
+      </a>
+      <a class="card" href="docs/meetings.html">
+        <div class="k mono">MEETING LOG</div>
+        <h3>회의 요약 <span class="pill new">NEW</span></h3>
+        <p>7/1 초기 기획 → 7/2 전략회의 → 7/6 치지직 사전미팅 → 내부 설계 스프린트. 회의별 핵심 결정·시그널과 다음 회의 안건 후보.</p>
+        <div class="m mono"><span>의사결정 추적용</span><span class="v">07.10</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="grp">
+    <div class="grp-head"><span class="no mono">03</span><h2>사업 — 제안</h2><span class="d">치지직 파트너십</span></div>
+    <div class="grid">
+      <a class="card" href="docs/redteam.html">
+        <div class="k mono">RED TEAM · 협상 준비</div>
+        <h3>치지직 요구안 시뮬레이션 &amp; 대응 매핑 <span class="pill" style="color:#ffb3b3;border-color:rgba(255,120,120,.5);">STRICTLY INTERNAL</span></h3>
+        <p>AI를 치지직 사업 담당자 자리에 앉혀 "30억 품의에 붙일 요구안"(텀시트 A~F 20조항)을 먼저 쓰고, 조항별 우리 대응(즉시 수용/조건부/방어선)을 매핑 — <b>이 요구안을 알아야 나머지 드래프트가 성립한다.</b> 읽기 순서 1번.</p>
+        <div class="m mono"><span>협상 민감 — 외부 공유 절대 금지</span><span class="v">v0.1 · 07.10</span></div>
+      </a>
+      <a class="card" href="docs/proposal.html">
+        <div class="k mono">PROPOSAL · 초기 드래프트</div>
+        <h3>치지직 파트너십 제안서 — 초안 (웹) <span class="pill">DRAFT</span></h3>
+        <p>좌측 요구안에 1:1로 응답하는 구조의 첫 드래프트 — 베네핏 6층 논리 · "투자 → 받는 것" 계산표 · 트랜스미디어(신작 웹툰 연동) · 신뢰와 안전. 정식 제안서의 내용 원천.</p>
+        <div class="m mono"><span>발신 전 최종 검수 필요</span><span class="v">v0.1 · 07.10</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="foot mono">
+    <span>PROJECT AWAKE(각성) · PROJECT HUB · 2026.07.10</span>
+    <span>SUPERSTORY 스토리테크본부 · INTERNAL</span>
+  </div>
+</div>
+
+</body>
+</html>
