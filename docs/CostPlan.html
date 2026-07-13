@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project AWAKE — 비용 산출서 v0.2 (치지직 청구 기준 · 3사 투입 구조)</title>
+<style>
+:root{
+  --bg:#0c0e14; --panel:#12151e; --panel2:#171b27; --line:#242a3a;
+  --txt:#f4f6fb; --sub:#c3c9d9; --dim:#959cb0;
+  --vio:#a99bff; --vio-deep:#7c6cf0; --gold:#e8c476; --green:#8fd8a8; --red:#e88a8a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--txt);font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;}
+.mono{font-family:"IBM Plex Mono",monospace;}
+.wrap{max-width:960px;margin:0 auto;padding:0 32px 120px;}
+
+header{padding:72px 0 0;}
+.doc-meta{display:flex;justify-content:space-between;align-items:baseline;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:56px;}
+.doc-meta .tag{color:var(--vio);}
+
+.hero .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.2em;color:var(--vio);margin-bottom:20px;}
+.hero h1{font-size:clamp(27px,4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.34;margin-bottom:20px;}
+.hero h1 .dim{color:var(--sub);font-weight:600;}
+.hero .thesis{color:var(--sub);font-size:15.5px;max-width:800px;margin-bottom:36px;}
+.hero .thesis strong{color:var(--txt);}
+
+/* ── platform split diagram (signature) ── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px;}
+.plat{border-radius:14px;padding:26px 26px 22px;border:1px solid var(--line);background:var(--panel);position:relative;}
+.plat.master{border-color:rgba(169,155,255,.45);background:linear-gradient(180deg,rgba(124,108,240,.10),var(--panel) 55%);}
+.plat.touch{border-color:rgba(232,196,118,.45);background:linear-gradient(180deg,rgba(232,196,118,.08),var(--panel) 55%);}
+.plat.touch .p-role{color:var(--gold);}
+.plat .p-role{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;color:var(--dim);}
+.plat.master .p-role{color:var(--vio);}
+.plat h3{font-size:21px;font-weight:800;letter-spacing:-.01em;margin:6px 0 4px;}
+.plat .p-sub{font-size:13px;color:var(--sub);margin-bottom:18px;}
+.chipset{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{font-size:12.5px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);}
+.chip.core{border-color:rgba(169,155,255,.5);color:var(--vio);}
+.chip.later{border-style:dashed;color:var(--dim);}
+.bridge{grid-column:1/3;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;color:var(--dim);padding:4px 0 0;}
+.bridge b{color:var(--gold);font-weight:600;}
+.hero-note{font-size:12.5px;color:var(--dim);margin-top:12px;}
+
+section{margin-top:88px;}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
+.sec-head .no{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--vio);letter-spacing:.15em;}
+.sec-head h2{font-size:23px;font-weight:800;letter-spacing:-.015em;}
+.sec-lede{color:var(--sub);margin-bottom:30px;max-width:800px;}
+.sec-lede strong{color:var(--txt);}
+
+/* ── benchmark table ── */
+.bench{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.bench-row{display:grid;grid-template-columns:210px 90px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.bench-row:last-child{border-bottom:none;}
+.bench-row.head{background:var(--panel2);}
+.bench-row .cell{padding:15px 18px;font-size:13.5px;}
+.bench-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--dim);padding:11px 18px;}
+.bench-row .f{font-weight:700;border-right:1px solid var(--line);}
+.bench-row .f .fs{display:block;font-size:11.5px;color:var(--dim);font-weight:400;margin-top:2px;}
+.bench-row .v{border-right:1px solid var(--line);display:flex;align-items:center;}
+.bench-row .d{color:var(--sub);}
+.bench-row .d strong{color:var(--txt);}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.06em;padding:3px 9px;border-radius:99px;white-space:nowrap;}
+.badge.adopt{color:var(--green);border:1px solid rgba(143,216,168,.4);}
+.badge.remix{color:var(--gold);border:1px solid rgba(232,196,118,.45);}
+.badge.skip{color:var(--dim);border:1px solid var(--line);}
+
+.diffbox{border:1px solid rgba(169,155,255,.3);background:rgba(169,155,255,.05);border-radius:14px;padding:26px 30px;margin-top:22px;}
+.diffbox .mono-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;color:var(--vio);display:block;margin-bottom:10px;}
+.diffbox p{color:var(--sub);font-size:14.5px;}
+.diffbox p strong{color:var(--txt);}
+
+/* ── rationale cards ── */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px;}
+.why .w{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 20px;}
+.why .w .wk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--vio);margin-bottom:8px;}
+.why .w h4{font-size:14.5px;font-weight:800;margin-bottom:6px;}
+.why .w p{font-size:12.5px;color:var(--sub);line-height:1.65;}
+
+/* ── feature matrix ── */
+.matrix{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.mx-row{display:grid;grid-template-columns:1fr 120px 120px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.mx-row:last-child{border-bottom:none;}
+.mx-row.head{background:var(--panel2);}
+.mx-row .cell{padding:13px 16px;font-size:13px;border-right:1px solid var(--line);}
+.mx-row .cell:last-child{border-right:none;}
+.mx-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--dim);padding:10px 16px;}
+.mx-row .fn{font-weight:700;}
+.mx-row .pv{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:11px;}
+.pv .on{color:var(--vio);font-weight:700;}
+.pv .semi{color:var(--gold);}
+.pv .off{color:#3d4354;}
+.mx-row .nt{color:var(--sub);font-size:12.5px;}
+
+/* ── user types ── */
+.users{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.users .u{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;}
+.users .u .uk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--vio);margin-bottom:8px;}
+.users .u h4{font-size:16px;font-weight:800;margin-bottom:8px;}
+.users .u p{font-size:13px;color:var(--sub);}
+.users .u p strong{color:var(--txt);}
+.flow-note{margin-top:16px;padding:14px 18px;border-radius:10px;background:rgba(143,216,168,.06);border:1px solid rgba(143,216,168,.22);font-size:13.5px;color:var(--txt);}
+.flow-note .mono-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--green);display:block;margin-bottom:4px;}
+
+/* ── IA tree ── */
+.ia{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ia .tree{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 26px;}
+.ia .tree h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--vio);margin-bottom:14px;}
+.ia ul{list-style:none;}
+.ia li{font-size:13.5px;padding:5px 0;color:var(--txt);border-bottom:1px dashed rgba(36,42,58,.7);}
+.ia li:last-child{border-bottom:none;}
+.ia li .sub-i{color:var(--dim);font-size:12px;display:block;padding-left:14px;}
+.ia li em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--dim);letter-spacing:.06em;margin-left:8px;}
+
+/* ── modules ── */
+.mod{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:13px;display:grid;grid-template-columns:64px 1fr;gap:18px;}
+.mod .mno{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;color:var(--vio-deep);padding-top:2px;}
+.mod h3{font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em;}
+.mod h3 .dep{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--gold);border:1px solid rgba(232,196,118,.4);border-radius:99px;padding:2px 8px;margin-left:9px;vertical-align:2px;letter-spacing:.05em;font-weight:500;}
+.mod p{color:var(--sub);font-size:13.5px;}
+.mod p strong{color:var(--txt);}
+
+/* ── roadmap ── */
+.phase{display:grid;grid-template-columns:120px 1fr;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-bottom:12px;}
+.phase .pk{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--vio);font-weight:600;line-height:1.5;}
+.phase .pk .pd{display:block;font-size:9.5px;color:var(--dim);font-weight:400;margin-top:3px;letter-spacing:.05em;}
+.phase h4{font-size:15px;font-weight:800;margin-bottom:5px;}
+.phase p{font-size:13px;color:var(--sub);}
+.phase p strong{color:var(--txt);}
+.phase.hot{border-color:rgba(232,196,118,.4);}
+
+/* ── risks ── */
+.risk{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.risk-row{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.risk-row:last-child{border-bottom:none;}
+.risk-row .cell{padding:16px 20px;font-size:13.5px;}
+.risk-row .rn{font-weight:700;border-right:1px solid var(--line);}
+.risk-row .rd{color:var(--sub);}
+.risk-row .rd strong{color:var(--txt);}
+
+/* ── act structure (2막) ── */
+.acts{display:grid;grid-template-columns:1fr 230px 1fr;gap:14px;margin-bottom:26px;align-items:stretch;}
+.act{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;}
+.act.a1{border-color:rgba(169,155,255,.45);background:linear-gradient(180deg,rgba(124,108,240,.08),var(--panel) 60%);}
+.act.a2{border-color:rgba(232,196,118,.4);background:linear-gradient(180deg,rgba(232,196,118,.07),var(--panel) 60%);}
+.act .ak{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;margin-bottom:8px;}
+.act.a1 .ak{color:var(--vio);} .act.a2 .ak{color:var(--gold);}
+.act h3{font-size:18px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em;}
+.act .asub{font-size:12.5px;color:var(--sub);margin-bottom:14px;}
+.act ul{list-style:none;}
+.act li{font-size:13px;color:var(--txt);padding:4px 0;border-bottom:1px dashed rgba(36,42,58,.7);}
+.act li:last-child{border-bottom:none;}
+.act li b{color:var(--vio);} .act.a2 li b{color:var(--gold);}
+.gate{background:var(--panel2);border:1px dashed var(--dim);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;justify-content:center;text-align:center;}
+.gate .gk{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.18em;color:var(--dim);margin-bottom:8px;}
+.gate h4{font-size:14.5px;font-weight:800;margin-bottom:6px;}
+.gate p{font-size:11.5px;color:var(--sub);line-height:1.6;}
+.gate .warn{margin-top:10px;font-size:10.5px;color:var(--gold);font-family:"IBM Plex Mono",monospace;letter-spacing:.04em;}
+/* ── duo comparison table ── */
+.duo{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:8px;}
+.duo-row{display:grid;grid-template-columns:170px 1fr 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.duo-row:last-child{border-bottom:none;}
+.duo-row.head{background:var(--panel2);}
+.duo-row .cell{padding:14px 18px;font-size:13px;border-right:1px solid var(--line);color:var(--sub);}
+.duo-row .cell:last-child{border-right:none;}
+.duo-row .cell strong{color:var(--txt);}
+.duo-row .lbl{font-weight:700;color:var(--txt);font-size:12.5px;}
+.duo-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;padding:11px 18px;}
+.duo-row.head .c1{color:var(--vio);} .duo-row.head .c2{color:var(--gold);}
+/* ── dual stat diagram ── */
+.statpair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px;}
+.statcol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 26px;}
+.statcol.s1{border-color:rgba(169,155,255,.4);} .statcol.s2{border-color:rgba(232,196,118,.4);}
+.statcol .sk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;margin-bottom:6px;}
+.statcol.s1 .sk{color:var(--vio);} .statcol.s2 .sk{color:var(--gold);}
+.statcol h4{font-size:16px;font-weight:800;margin-bottom:3px;}
+.statcol .ssub{font-size:12px;color:var(--sub);margin-bottom:14px;}
+.srow{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:6px 0;border-bottom:1px dashed rgba(36,42,58,.7);font-size:12.5px;}
+.srow:last-child{border-bottom:none;}
+.srow .sn{font-weight:700;color:var(--txt);}
+.srow .sd{color:var(--dim);font-size:11.5px;line-height:1.55;}
+.stat-note{font-size:12.5px;color:var(--dim);margin-top:12px;}
+
+/* ── concept art figures ── */
+.figwrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:20px 0 8px;}
+.figwrap img{display:block;width:100%;}
+.fig3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 8px;}
+.fig3 .fcell{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);}
+.fig3 img{display:block;width:100%;}
+.fig3 .fl{padding:10px 14px;font-size:11.5px;color:var(--sub);line-height:1.6;border-top:1px solid var(--line);}
+.fig3 .fl b{color:var(--gold);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;display:block;margin-bottom:3px;}
+@media (max-width:760px){.fig3{grid-template-columns:1fr;}}
+
+/* ── cover (title page) ── */
+.cover{min-height:94vh;display:flex;flex-direction:column;justify-content:center;padding:60px 0 40px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+.cover .c-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);margin-bottom:46px;}
+.cover .c-orb{width:64px;height:64px;border-radius:50%;margin-bottom:34px;background:radial-gradient(circle at 35% 30%, #cfc5ff, var(--vio-deep));box-shadow:0 0 22px rgba(169,155,255,.55), 0 0 0 4px rgba(232,196,118,.5);}
+.cover h1{font-size:clamp(38px,6vw,62px);font-weight:800;letter-spacing:-.025em;line-height:1.12;margin-bottom:14px;}
+.cover h1 .kr{color:var(--gold);font-weight:700;}
+.cover .c-sub{font-size:clamp(16px,2.2vw,21px);font-weight:600;color:var(--sub);letter-spacing:.01em;margin-bottom:14px;}
+.cover .c-sub b{color:var(--txt);}
+.cover .c-badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.15em;color:var(--red);border:1px solid rgba(240,138,138,.45);border-radius:99px;padding:4px 14px;margin-bottom:52px;width:fit-content;}
+.cover .c-why{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:880px;}
+.cover .why-box{border-top:1px solid var(--line);padding-top:16px;}
+.cover .why-box .wl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--vio);margin-bottom:9px;}
+.cover .why-box.gold .wl{color:var(--gold);}
+.cover .why-box p{font-size:12px;color:var(--dim);line-height:1.8;}
+.cover .why-box p strong{color:var(--sub);font-weight:700;}
+.cover .c-foot{margin-top:56px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);}
+@media (max-width:760px){.cover .c-why{grid-template-columns:1fr;}}
+
+/* ── ecosystem map table ── */
+.map{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:8px;}
+.map-row{display:grid;grid-template-columns:190px 150px 160px 1fr;border-bottom:1px solid var(--line);background:var(--panel);}
+.map-row:last-child{border-bottom:none;}
+.map-row.head{background:var(--panel2);}
+.map-row .cell{padding:12px 15px;font-size:12.8px;border-right:1px solid var(--line);color:var(--sub);}
+.map-row .cell:last-child{border-right:none;}
+.map-row.head .cell{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--dim);padding:10px 15px;}
+.map-row .b1{font-weight:700;color:var(--txt);}
+.map-row .cell strong{color:var(--txt);}
+.map-row .app{color:var(--vio);font-weight:700;}
+/* ── insight cards ── */
+.insight{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+.insight .w{background:var(--panel);border:1px solid rgba(143,216,168,.3);border-radius:12px;padding:20px;}
+.insight .w .wk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--green);margin-bottom:8px;}
+.insight .w h4{font-size:14px;font-weight:800;margin-bottom:6px;color:var(--txt);}
+.insight .w p{font-size:12.3px;color:var(--sub);line-height:1.65;}
+.insight .w p strong{color:var(--txt);}
+@media (max-width:760px){.map-row{grid-template-columns:1fr 1fr;} .insight{grid-template-columns:1fr;}}
+
+/* ── genesis (단계적 탄생) ── */
+.genesis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0 10px;}
+.gstate{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 13px 16px;text-align:center;}
+.gstate.final{border-color:rgba(232,196,118,.55);background:linear-gradient(180deg,rgba(232,196,118,.09),var(--panel) 60%);}
+.orb{width:52px;height:52px;border-radius:50%;margin:0 auto 12px;}
+.orb.o0{border:2px dashed #4a5063;background:repeating-linear-gradient(45deg,transparent 0 4px,rgba(107,114,128,.15) 4px 6px);}
+.orb.o1{border:1px solid var(--line);background:conic-gradient(var(--vio-deep) 0 25%, #1b2030 25% 100%);}
+.orb.o2{border:1px solid var(--line);background:conic-gradient(var(--vio-deep) 0 55%, #1b2030 55% 100%);}
+.orb.o3{border:1px solid rgba(169,155,255,.5);background:conic-gradient(var(--vio-deep) 0 90%, #1b2030 90% 100%);}
+.orb.o4{background:radial-gradient(circle at 35% 30%, #cfc5ff, var(--vio-deep));box-shadow:0 0 16px rgba(169,155,255,.55), 0 0 0 3px rgba(232,196,118,.55);}
+.gstate .gk2{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;color:var(--dim);margin-bottom:4px;}
+.gstate.final .gk2{color:var(--gold);}
+.gstate h5{font-size:12.5px;font-weight:800;margin-bottom:5px;color:var(--txt);}
+.gstate p{font-size:10.8px;color:var(--dim);line-height:1.55;}
+/* ── FOR/AS ── */
+.foras{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 6px;}
+.fa{border-radius:12px;padding:20px 22px;border:1px solid;}
+.fa.ok{border-color:rgba(143,216,168,.35);background:rgba(143,216,168,.05);}
+.fa.no{border-color:rgba(240,138,138,.38);background:rgba(240,138,138,.05);}
+.fa .fk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.15em;display:block;margin-bottom:7px;}
+.fa.ok .fk{color:var(--green);} .fa.no .fk{color:var(--red);}
+.fa h5{font-size:14.5px;font-weight:800;margin-bottom:7px;}
+.fa p{font-size:12.8px;color:var(--sub);line-height:1.65;}
+.fa p strong{color:var(--txt);}
+/* ── forbid (방송 문법) ── */
+.forbid{border:1px solid rgba(240,138,138,.32);border-radius:12px;background:rgba(240,138,138,.04);padding:24px 28px;margin-top:16px;}
+.forbid .mono-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;color:var(--red);display:block;margin-bottom:10px;}
+.forbid p{font-size:13.5px;color:var(--sub);padding:6px 0;border-bottom:1px dashed rgba(240,138,138,.15);}
+.forbid p:last-of-type{border-bottom:none;}
+.forbid p strong{color:var(--txt);}
+.forbid .clause{margin-top:12px;padding:11px 14px;border-radius:8px;background:rgba(240,138,138,.08);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--txt);letter-spacing:.02em;}
+
+footer{margin-top:100px;border-top:1px solid var(--line);padding-top:20px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim);letter-spacing:.08em;line-height:2;}
+
+@media (max-width:760px){
+  .wrap{padding:0 20px 80px;}
+  .split{grid-template-columns:1fr;}
+  .bridge{grid-column:1;}
+  .why,.users,.ia{grid-template-columns:1fr;}
+  .bench-row{grid-template-columns:1fr;}
+  .bench-row .f,.bench-row .v{border-right:none;border-bottom:1px dashed var(--line);}
+  .mx-row{grid-template-columns:1fr 60px 60px;}
+  .mx-row .nt{display:none;}
+  .mod,.phase{grid-template-columns:1fr;gap:6px;}
+  .risk-row{grid-template-columns:1fr;}
+  .risk-row .rn{border-right:none;border-bottom:1px solid var(--line);}
+}
+</style><style>
+.mini-cover{padding:70px 0 46px;border-bottom:1px solid var(--line);margin-bottom:34px;}
+.mini-cover .c-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);margin-bottom:26px;}
+.mini-cover h1{font-size:clamp(28px,4.2vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.18;margin-bottom:10px;}
+.mini-cover h1 .kr{color:var(--gold);font-weight:700;}
+.mini-cover .c-sub{font-size:16px;font-weight:600;color:var(--sub);margin-bottom:16px;}
+.mini-cover .c-note{font-size:12px;color:var(--dim);line-height:1.75;max-width:780px;}
+.mini-cover .c-note strong{color:var(--sub);}
+.mini-foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);}
+.cmp{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:12.5px;line-height:1.7;}
+.cmp th,.cmp td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;text-align:left;}
+.cmp th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;color:var(--dim);background:rgba(255,255,255,.02);font-weight:600;}
+.cmp td.opt{white-space:nowrap;font-weight:700;color:var(--txt);}
+.cmp tr.pick td{background:rgba(122,255,178,.045);}
+.cmp tr.pick td.opt{color:#7dd8a0;}
+.cmp tr.kill td{opacity:.62;}
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;padding:3px 10px;border-radius:3px;margin-left:8px;vertical-align:2px;}
+.badge.dec{color:#7dd8a0;border:1px solid rgba(125,216,160,.45);background:rgba(125,216,160,.07);}
+.badge.rec{color:var(--gold);border:1px solid rgba(232,196,118,.45);background:rgba(232,196,118,.07);}
+.decision{border:1px solid rgba(125,216,160,.4);background:rgba(125,216,160,.05);border-radius:8px;padding:16px 18px;margin:16px 0 6px;font-size:13px;line-height:1.85;}
+.decision .dk{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;color:#7dd8a0;margin-bottom:8px;}
+.decision.amber{border-color:rgba(232,196,118,.4);background:rgba(232,196,118,.05);}
+.decision.amber .dk{color:var(--gold);}
+</style>
+<style>
+.mode-a{color:#8fd8a8;font-weight:700;}
+.mode-b{color:#e8c476;font-weight:700;}
+.num{font-family:"IBM Plex Mono",monospace;white-space:nowrap;}
+.total-row td{background:rgba(232,196,118,.07);font-weight:800;border-top:2px solid var(--gold) !important;}
+.keep{color:#8fd8a8;} .cut{color:#e88a8a;}
+</style>
+</head><body><div class="wrap">
+
+<div class="mini-cover">
+<div class="c-eyebrow">SUPERSTORY × LVNEXUS × CHZZK — VIRTUAL AUDITION PROJECT</div>
+<h1>비용 산출서 <span class="kr">— A/B 이원 모드</span></h1>
+<div class="c-sub">Project AWAKE(각성) · 치지직 청구 기준 + 3사 투입 총괄 · v0.2 · 2026.07.13</div>
+<div class="c-note"><b style="color:#e88a8a">STRICTLY INTERNAL — 원가 구조 노출 금지.</b> 본 문서는 7/6 사전미팅의 "기획안 + 정확한 금액" 요구에 대한 내부 산출 원본이다. <b>§02~03의 금액은 치지직 청구(제작비) 기준</b>이며, 슈퍼스토리·LVNEXUS 투입분은 §06 3사 투입 총괄에 별도 계상한다 — 각 사의 투자가 각 사의 소유·회수와 1:1로 맞는 구조(v0.2 재편).
+외부 제출 시에는 본 문서에서 파생한 요약(대분류 합계 수준)만 노출하고, 단가·수량 분해는 협상 카드로 보유한다.
+모든 단가는 시장 단가 기준 내부 추정치 — <span style="color:var(--gold)">⚠ 표기 항목은 견적 검증 필수.</span></div>
+</div>
+
+<section>
+<div class="sec-head"><span class="no">01</span><h2>산출 전제</h2></div>
+<p class="sec-lede">① <strong>네이버 스튜디오 사용 — 스튜디오 렌탈비 제외 순수 제작비</strong> (7/6 확인 전제. 스튜디오 운영 인력의 분담 범위는 미확정 — §05).
+<br>② 시즌 1회 기준(P0 준비 ~ P3 데뷔 인계, 약 6~7개월). <br>③ 데뷔 5인만 3D 승격 + 바디 골격 공용화(7/2 결론).
+<br>④ 캐릭터 24체 원화는 레이어 분리 + 마지막 붓 옵션 파츠 포함 발주. <br>⑤ LVNEXUS AI 심사 API 정산 방식(라이선스 vs 건당) 미확정 — 연동·검증 비용만 계상, 사용료는 §05 변수.
+<br>⑥ 앱은 슈퍼스토리 소유·개발 — 본 산출의 기술비는 <strong>시즌 투입분</strong>이며 자산 투자분과 구분 계리.
+<br>⑦ <strong>귀속 원칙(v0.2)</strong>: 시즌이 끝나도 남는 IP 자산(24체 원화·리깅, 앱 코어, 웹툰 콘텐츠)은 소유자인 슈퍼스토리가 투자하고,
+방송을 위해 존재하는 것(생방 제작, 3D 승격 무대, 시즌 기술 투입, 리스크 관리, 마케팅)만 치지직에 청구한다 —
+"우리 돈으로 만든 캐릭터"라는 IP 양도 논리를 원천 차단하는 재무 구조.</p>
+<div class="decision amber">
+<div class="dk">두 모드의 정의 — 금액이 아니라 구조가 다르다</div>
+<b>A안 · 표준 (25~30억)</b> — 레귤러 12회 편성, 각성 24모먼트 캐릭터별 커스텀 연출, 별도 데뷔 쇼케이스(3D 첫 공개), 자체 마케팅 캠페인 정상 집행.
+<br><b>B안 · 압축 (20~25억)</b> — 본선 10회 압축(각성 모먼트 회당 밀도 상향), 각성 연출 템플릿화(포맷 공통 + 캐릭터 스킨), 쇼케이스를 파이널 2부로 통합,
+마케팅은 <b>치지직 지면·트래픽 현물 분담 전제</b>로 축소. <span style="color:var(--gold)">B안은 "덜 쓰는 안"이 아니라 "치지직이 더 분담하는 안" — 협의 프레임 주의.</span>
+</div>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">02</span><h2>요약 — 치지직 청구 기준 배분표</h2></div>
+<table class="cmp">
+<tr><th style="width:200px;">대분류</th><th>A안 · 표준<br><span style="font-weight:400;color:var(--dim)">레귤러 12회</span></th><th>B안 · 압축<br><span style="font-weight:400;color:var(--dim)">10회 + 현물 분담</span></th><th>A→B 절감 수단</th></tr>
+<tr><td class="opt">① 방송 제작비</td><td class="num mode-a">10.5 ~ 12.0억</td><td class="num mode-b">8.3 ~ 10.0억</td><td>회차 12→10 · 각성 연출 템플릿화 · 쇼케이스 파이널 통합</td></tr>
+<tr><td class="opt">② 3D 승격·시즌 아트<br><span style="font-size:11px;color:var(--dim);">구 캐릭터 자산비 중 제작 귀속분</span></td><td class="num mode-a">1.8 ~ 2.2억</td><td class="num mode-b">1.3 ~ 1.8억</td><td>3D 의상 베리에이션 축소 · 예비 파츠 최소화. <b>24체 원화·리깅은 슈퍼스토리 투자로 이관(§06)</b></td></tr>
+<tr><td class="opt">③ 기술·플랫폼비</td><td class="num mode-a">4.5 ~ 5.5억</td><td class="num mode-b">4.0 ~ 4.8억</td><td>앱 기능셋을 RC 최소선으로 (투표·원장·재화 코어는 불변)</td></tr>
+<tr><td class="opt">④ 운영·리스크 관리비</td><td class="num mode-a">2.2 ~ 2.6억</td><td class="num mode-b">2.0 ~ 2.3억</td><td class="keep">최소 절감 — 검증·보호는 신뢰 셀링 포인트, 방어선</td></tr>
+<tr><td class="opt">⑤ 콘텐츠 연동비</td><td class="num" style="color:var(--dim)">청구 제외</td><td class="num" style="color:var(--dim)">청구 제외</td><td><b>슈퍼스토리 투자로 이관(§06)</b> — 웹툰·인터랙티브 특별편은 시즌 후 우리 IP 사업 자산이므로 청구 시 IP 귀속 논리가 흔들림</td></tr>
+<tr><td class="opt">⑥ 마케팅·프로모션</td><td class="num mode-a">2.8 ~ 3.7억</td><td class="num mode-b">1.8 ~ 2.5억</td><td>치지직 지면·트래픽 현물 분담 전제 (계약 명시 필요)</td></tr>
+<tr class="total-row"><td class="opt">치지직 청구 합계</td><td class="num mode-a">21.8 ~ 26.0억</td><td class="num mode-b">17.4 ~ 21.4억</td><td>3사 합산 총 사업 규모는 §06 (A 기준 약 31~38억 상당)</td></tr>
+</table>
+<div class="decision" style="margin:14px 0;">
+<div class="dk">7/6 판독과의 정합 검증 — "기술비 10~20억"은 어디로 갔나</div>
+7/6 사전미팅 기록: 네이버 리더 <b>"미니멈 기술지원 포함 10억 이상"</b>(예능 회당 제작비 수준 + 버추얼 기술 상승분) ·
+내부 판독 <b>"기술 10~맥스 20억, 총 20~30억"</b>. 당시 '기술'은 버추얼 제작 기술 전반을 뭉뚱그린 감이며, 본 산출서에서는 6항목으로 분해되어 세 곳에 배분됨:
+③ 기술·플랫폼비 <span class="num">4.5~5.5억</span> + ② 3D <span class="num">1.5~1.8억</span> + ① 중 버추얼 스테이지·모션 기술 크루(회당 단가 내장분) <span class="num">약 2.5~3.5억</span>
+= <b>치지직 청구 내 기술 성격 약 8.5~10.8억</b>, 슈퍼스토리 투자분(리깅 0.9~1.1억 + 앱 코어)까지 합치면 판독 레인지 중단 — 정합. 하단인 이유: 앱 코어·리깅은 자산 투자로 구분 계리(§01 전제 ⑦).
+치지직 청구 총액(A안 21.8~26.0억)도 판독의 "총 20~30억" 레인지 내에 정확히 들어온다.
+</div>
+<p class="stat-note">구 프레임(30~35억) 대비: 단가 현실화 + <b>IP 자산의 슈퍼스토리 투자 이관</b>으로 치지직 청구가 사업부 목표선(25~30 / 20~25) 아래로 내려옴 — 판이 줄어든 게 아니라 분담 구조가 정교해진 것(총 사업 규모는 §06). 제안서·PPT 표기 갱신 필요(§05).</p>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">03</span><h2>항목별 상세 산출</h2></div>
+
+<h3 style="font-size:15px;font-weight:800;margin:26px 0 10px;">① 방송 제작비</h3>
+<table class="cmp">
+<tr><th>구성</th><th style="width:230px;">산출식 (A안)</th><th style="width:110px;">A안</th><th style="width:230px;">산출식 (B안)</th><th style="width:110px;">B안</th></tr>
+<tr><td>본선 생방 제작<br><span style="color:var(--dim);font-size:11px;">연출·작가·스태프·기술 크루·버추얼 스테이지 운영 포함, 회당 2~3h</span></td>
+<td class="num">12회 × 7,000~7,500만 ⚠</td><td class="num">8.4~9.0억</td><td class="num">10회 × 7,000~7,500만</td><td class="num">7.0~7.5억</td></tr>
+<tr><td>각성 모먼트 연출 패키지<br><span style="color:var(--dim);font-size:11px;">캐릭터별 각성 시퀀스·첫 목소리 세션·음향(회차 내 세그먼트, 24회분)</span></td>
+<td class="num">24 × 600~800만 (커스텀)</td><td class="num">1.4~1.9억</td><td class="num">24 × 400~500만 (템플릿+스킨)</td><td class="num">1.0~1.2억</td></tr>
+<tr><td>파이널·3D 승격 무대</td><td class="num">별도 데뷔 쇼케이스</td><td class="num">0.7~1.1억</td><td class="num">파이널 2부 통합</td><td class="num">0.3~0.6억</td></tr>
+<tr class="total-row"><td>소계</td><td></td><td class="num mode-a">10.5~12.0억</td><td></td><td class="num mode-b">8.3~9.3억<span style="color:var(--dim)">(+예비 0.7)</span></td></tr>
+</table>
+<p class="stat-note">예선이 이 항목에 없는 이유 — AI 스코어 + 버추얼 MC의 앱 화면 송출로 대체(7/6 치지직 긍정 반응 확인). 무대·심사위원·현장 제작이 발생하지 않는 것이 본 기획의 구조적 절감이며, 그 대체 비용은 ③ 기술비(앱)에 이미 계상되어 있다.</p>
+
+<h3 style="font-size:15px;font-weight:800;margin:26px 0 10px;">② 캐릭터 자산비</h3>
+<table class="cmp">
+<tr><th>구성</th><th style="width:230px;">산출식 (A안)</th><th style="width:110px;">A안</th><th style="width:230px;">산출식 (B안)</th><th style="width:110px;">B안</th></tr>
+<tr style="opacity:.55;"><td>24체 원화 <b style="color:var(--gold)">→ 슈퍼스토리 투자 이관</b><br><span style="color:var(--dim);font-size:11px;">레이어 분리 납품 + 마지막 붓 옵션 파츠 — IP 본체는 소유자가 투자(§06)</span></td>
+<td class="num">24 × 550~600만 ⚠</td><td class="num">(1.3~1.4억)</td><td class="num">동일</td><td class="num">(1.3~1.4억)</td></tr>
+<tr style="opacity:.55;"><td>2D 리깅(버튜버 모델링) <b style="color:var(--gold)">→ 슈퍼스토리 투자 이관</b></td><td class="num">24 × 380~450만 ⚠</td><td class="num">(0.9~1.1억)</td><td class="num">동일</td><td class="num">(0.9~1.0억)</td></tr>
+<tr><td>데뷔 5인 3D 모델 <b class="keep">— 치지직 제작비 잔류</b><br><span style="color:var(--dim);font-size:11px;">바디 골격 공용화 절감 반영(개당 3~4천만 — 7/2). 3D는 시즌 클라이맥스(승격 무대)를 위한 방송 연출물이므로 제작비 귀속</span></td>
+<td class="num">5 × 3,000~3,500만</td><td class="num">1.5~1.8억</td><td class="num">5 × 2,600~3,000만<br>(의상 베리에이션 축소)</td><td class="num">1.3~1.5억</td></tr>
+<tr><td>예비 아트<br><span style="color:var(--dim);font-size:11px;">승계·재봉인 연출용 파츠, 시즌 그래픽</span></td>
+<td class="num">일괄</td><td class="num">0.3~0.4억</td><td class="num">최소화</td><td class="num">0~0.3억</td></tr>
+<tr class="total-row"><td>치지직 청구 소계 (3D + 예비 아트)</td><td></td><td class="num mode-a">1.8~2.2억</td><td></td><td class="num mode-b">1.3~1.8억</td></tr>
+</table>
+<p class="stat-note"><b class="keep">24체 원화·리깅은 두 모드에서 규모 불변, 귀속만 슈퍼스토리 투자로 이관</b> — "치지직 돈으로 만든 캐릭터"라는 IP 양도 논리를 차단하고(레드팀 C1 방어), 캐릭터는 시즌 후에도 남는 우리 자산(비데뷔 19인 트랙 포함)임을 재무로 증명한다.</p>
+
+<h3 style="font-size:15px;font-weight:800;margin:26px 0 10px;">③ 기술·플랫폼비 (시즌 투입분)</h3>
+<table class="cmp">
+<tr><th>구성</th><th style="width:230px;">산출식 (A안)</th><th style="width:110px;">A안</th><th style="width:230px;">산출식 (B안)</th><th style="width:110px;">B안</th></tr>
+<tr><td>투표 앱 개발·운영<br><span style="color:var(--dim);font-size:11px;">투표 엔진(M4)·원장(M8)·재화(M5)·꾸미기·시즌 운영</span></td>
+<td class="num">개발 5~6인 × 6개월 상당</td><td class="num">2.5~3.0억</td><td class="num">RC 최소 기능셋<br>(코어 3모듈 불변)</td><td class="num">2.2~2.6억</td></tr>
+<tr><td>AI 심사 연동·검증<br><span style="color:var(--dim);font-size:11px)">API 연동 개발 + 파일럿 검증. 사용료 정산은 §05 변수</span></td>
+<td class="num">일괄</td><td class="num">0.6~0.8억</td><td class="num">일괄</td><td class="num">0.5~0.7억</td></tr>
+<tr><td>치지직 연동 개발<br><span style="color:var(--dim);font-size:11px;">딥링크~오버레이(범위 협의)</span></td>
+<td class="num">일괄 ⚠범위 의존</td><td class="num">0.4~0.5억</td><td class="num">딥링크 수준</td><td class="num">0.3~0.4억</td></tr>
+<tr><td>인프라·QA·보안<br><span style="color:var(--dim);font-size:11px;">시즌 트래픽 스파이크 대응, 원장 감사 대응</span></td>
+<td class="num">6~7개월 운영</td><td class="num">1.0~1.2억</td><td class="num">동일 수준(트래픽은 동일)</td><td class="num">1.0~1.1억</td></tr>
+<tr class="total-row"><td>소계</td><td></td><td class="num mode-a">4.5~5.5억</td><td></td><td class="num mode-b">4.0~4.8억</td></tr>
+</table>
+
+<h3 style="font-size:15px;font-weight:800;margin:26px 0 10px;">④ 운영·리스크 관리비 <span class="keep">— 최소 절감 원칙</span></h3>
+<table class="cmp">
+<tr><th>구성</th><th style="width:230px;">산출식 (A안)</th><th style="width:110px;">A안</th><th style="width:230px;">산출식 (B안)</th><th style="width:110px;">B안</th></tr>
+<tr><td>출연자 검증<br><span style="color:var(--dim);font-size:11px;">G2 층위화: 결선 72~120명 표준 스크리닝 + 상위 48~72명 전문 평판 조회 외주 ⚠</span></td>
+<td class="num">외주 단가 × 층위 수량</td><td class="num">0.5~0.6억</td><td class="num">동일 (검증은 축소 불가)</td><td class="num">0.5~0.6억</td></tr>
+<tr><td>신상 보호·클린업 지원</td><td class="num">24인 프로그램</td><td class="num">0.3억</td><td class="num">동일</td><td class="num">0.3억</td></tr>
+<tr><td>심리 지원(소울 멘탈 케어)<br><span style="color:var(--dim);font-size:11px;">탈락자 케어 포함 — 운영 표준</span></td>
+<td class="num">시즌 계약</td><td class="num">0.3억</td><td class="num">동일</td><td class="num">0.25억</td></tr>
+<tr><td>모니터링 인력<br><span style="color:var(--dim);font-size:11px;">채팅·커뮤니티·위기 키워드(생방 L0 배치 포함)</span></td>
+<td class="num">시즌 운영</td><td class="num">0.4~0.5억</td><td class="num">회차 축소분 반영</td><td class="num">0.35~0.45억</td></tr>
+<tr><td>법무·보험<br><span style="color:var(--dim);font-size:11px;">참가 규약 조문화·원작자 계약·미성년 특칙 + 제작 보험 ⚠</span></td>
+<td class="num">일괄</td><td class="num">0.7~0.9억</td><td class="num">동일</td><td class="num">0.6~0.7억</td></tr>
+<tr class="total-row"><td>소계</td><td></td><td class="num mode-a">2.2~2.6억</td><td></td><td class="num mode-b">2.0~2.3억</td></tr>
+</table>
+<p class="stat-note">이 항목은 B안에서도 사실상 지킨다 — <b>"리스크에 쓰는 비용" 라인이 치지직 설득의 신뢰 셀링 포인트</b>(제안서 §06)이자, 사전 검증이 가장 싼 보험이라는 §07 원칙의 재무적 표현이기 때문.</p>
+
+<h3 style="font-size:15px;font-weight:800;margin:26px 0 10px;">⑤ 콘텐츠 연동비 <b style="color:var(--gold)">— 전액 슈퍼스토리 투자 이관 (참고 계상)</b></h3>
+<table class="cmp">
+<tr><th>구성</th><th style="width:230px;">산출식 (A안)</th><th style="width:110px;">A안</th><th style="width:230px;">산출식 (B안)</th><th style="width:110px;">B안</th></tr>
+<tr><td>웹툰 프롤로그(시즌 동기화분)<br><span style="color:var(--dim);font-size:11px;">정규 연재는 시즌 후 — 본 산출 제외</span></td>
+<td class="num">3작품 × 2화</td><td class="num">0.6~0.75억</td><td class="num">3작품 × 1화</td><td class="num">0.3~0.4억</td></tr>
+<tr><td>플레이툰 인터랙티브 특별편<br><span style="color:var(--dim);font-size:11px;">봉인 해제 조작 콘텐츠 — 자사 플레이툰 스택 활용으로 외주 대비 절감</span></td>
+<td class="num">3작품 × 1~2종</td><td class="num">0.6~0.75억</td><td class="num">3작품 × 1종</td><td class="num">0.5~0.6억</td></tr>
+<tr class="total-row"><td>소계 (슈퍼스토리 투자 — 치지직 청구 제외)</td><td></td><td class="num" style="color:var(--dim)">(1.2~1.5억)</td><td></td><td class="num" style="color:var(--dim)">(0.8~1.0억)</td></tr>
+</table>
+
+<h3 style="font-size:15px;font-weight:800;margin:26px 0 10px;">⑥ 마케팅·프로모션</h3>
+<table class="cmp">
+<tr><th>구성</th><th style="width:230px;">산출식 (A안)</th><th style="width:110px;">A안</th><th style="width:230px;">산출식 (B안)</th><th style="width:110px;">B안</th></tr>
+<tr><td>런칭 캠페인(잠든 초상 티저)</td><td class="num">자체 집행</td><td class="num">1.0~1.4억</td><td class="num">치지직 지면 분담 전제</td><td class="num">0.6~0.9억</td></tr>
+<tr><td>참가 모객(소울 오디션 접수)</td><td class="num">타깃 광고 + 커뮤니티</td><td class="num">0.8~1.0억</td><td class="num">동일 축소</td><td class="num">0.5~0.7억</td></tr>
+<tr><td>시즌 프로모션·바이럴<br><span style="color:var(--dim);font-size:11px;">각성 클립·숏폼 유통, 승격 무대 캠페인</span></td>
+<td class="num">자체 집행</td><td class="num">1.0~1.3억</td><td class="num">치지직 트래픽 의존 상향</td><td class="num">0.7~0.9억</td></tr>
+<tr class="total-row"><td>소계</td><td></td><td class="num mode-a">2.8~3.7억</td><td></td><td class="num mode-b">1.8~2.5억</td></tr>
+</table>
+<p class="stat-note"><b class="cut">B안의 마케팅 절감은 공짜가 아니다</b> — 치지직 메인 지면·알림·추천 트래픽의 현물 분담을 계약에 명시하는 것이 전제. 명시 없이 금액만 깎으면 모객 실패 → 접수 풀 부족 → G2 층위화 붕괴로 이어진다.</p>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">04</span><h2>A → B, 무엇을 지키고 무엇을 줄이나</h2></div>
+<table class="cmp">
+<tr><th style="width:130px;">구분</th><th>항목</th><th>논리</th></tr>
+<tr><td class="opt keep">절대 지킴</td><td>24체 원화·리깅(슈퍼스토리 투자로 이관, 규모 불변) / 검증·보호 예산 / 투표 코어 3모듈 / 데뷔 5인 3D(치지직 제작비)</td>
+<td>IP 본체 + 신뢰 인프라 + BM 코어 + 시즌 클라이맥스 — 여기가 줄면 "같은 사업의 축소판"이 아니라 "다른 사업"이 된다</td></tr>
+<tr><td class="opt cut">구조로 줄임</td><td>회차 12→10 / 각성 연출 템플릿화 / 쇼케이스 파이널 통합 / 프롤로그 1화</td>
+<td>연출 밀도와 편성 길이의 압축 — 텐트폴 임팩트가 일부 하락하는 대신 회당 각성 밀도가 올라가 몰아보기형 화제성은 유지 가능</td></tr>
+<tr><td class="opt cut">분담으로 줄임</td><td>마케팅 1.0~1.2억 / 스튜디오 운영 인력(§05)</td>
+<td>우리 지출이 치지직 현물로 대체 — <b>B안 채택 = 치지직 분담 조항이 계약에 들어간다는 뜻</b>. 협의 자리에서 이 인과를 명시할 것</td></tr>
+</table>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">05</span><h2>민감도 · 미확정 변수</h2></div>
+<table class="cmp">
+<tr><th style="width:220px;">변수</th><th>영향</th></tr>
+<tr><td class="opt">LVNEXUS AI API 정산</td><td>라이선스 일괄 vs 분석 건당 — 접수 규모(수천~수만 건)에 따라 ③이 ±0.3~1.0억 변동. Q1~Q5 회신 후 확정.</td></tr>
+<tr><td class="opt">치지직 연동 범위</td><td>딥링크(계상 기준) ↔ 방송 중 투표 오버레이·계정 연동 시 ③ +0.3~0.8억. 연동 개발의 주체 분담도 협의 대상.</td></tr>
+<tr><td class="opt">스튜디오 운영 인력</td><td>"렌탈비 제외"가 장비·공간만인지 운영 크루 포함인지에 따라 ① ±0.5~1.0억. <b>7/6 발언의 범위 확인 필요 — 사업 미팅 확인 안건.</b></td></tr>
+<tr><td class="opt">편성 최종 확정</td><td>파일럿 8회로 축소 시 B안 하단(20억)도 하회 가능하나, 각성 24모먼트의 회당 3개 배치가 되어 연출 과밀 — 권장하지 않음.</td></tr>
+<tr><td class="opt">외주 시황</td><td>원화·리깅·3D 단가는 2026 상반기 시장가 기준 추정 — 발주처 견적 3사 비교로 확정(⚠ 표기 항목 전체). 전체 ±10% 버퍼 권장.</td></tr>
+</table>
+<div class="decision" style="margin-top:14px;">
+<div class="dk">문서 정합 조치 필요</div>
+본 산출로 대외 표기가 <b>"총 사업 규모 30~35억" → "치지직 투자 A안 약 22~26억 (총 사업 규모 3사 합산 31~38억 상당)"</b>으로 바뀐다. 사업부 확정 후:
+① PPT 요약본 7p(총 규모)·8p("30~35억이 사는 것") ② 제안서(치지직 제출용) ③ 쇼 바이블 §08 예산 프레임 — 3곳 동기화 필요.
+어느 모드를 대외 기준으로 노출할지(A 단일 제시 vs A/B 병기)는 협상 전략 사안 — <b>권고: 외부에는 A안 단일 제시, B안은 협상 카드로 보유. 3사 투입 총괄(§06)은 "각 사가 자기 것에 투자한다"는 프레임으로 제안서에 노출 — 오히려 IP 방어에 유리.</b>
+</div>
+</section>
+
+
+<section>
+<div class="sec-head"><span class="no">06</span><h2>3사 투입 총괄 — 각 사의 투자가 각 사의 회수와 맞는 구조</h2></div>
+<p class="sec-lede">치지직 청구액(§02)은 전체 판의 일부다. 총 사업 규모는 3사 합산으로 유지되며,
+각 주체는 <strong>자신이 소유·회수하는 것에 투자한다</strong> — 이 정렬이 IP 원칙("이전 불가")과 RS 요구("투자의 회수")의 재무적 근거가 된다.</p>
+<table class="cmp">
+<tr><th style="width:130px;">주체</th><th style="width:160px;">투입 성격</th><th>투입 항목</th><th style="width:150px;">규모 (A안 기준)</th><th>회수 구조</th></tr>
+<tr><td class="opt">네이버 치지직</td><td>제작비<br><span style="color:var(--dim);font-size:11px;">"쇼를 산다"</span></td>
+<td>① 방송 제작 + ② 3D 승격·시즌 아트 + ③ 시즌 기술 투입 + ④ 리스크 관리 + ⑥ 마케팅</td>
+<td class="num mode-a">21.8~26.0억<br><span class="mode-b" style="font-size:11px;">B안 17.4~21.4억</span></td>
+<td>시즌 독점 방송 · 세계관 라이브 영구 홈 · 데뷔조 장기 독점 라이선스 · 연동 매출 셰어 · B2B 쇼룸</td></tr>
+<tr><td class="opt">슈퍼스토리</td><td>자산 투자<br><span style="color:var(--dim);font-size:11px;">"IP를 만든다"</span></td>
+<td>24체 원화(1.3~1.4) + 2D 리깅(0.9~1.1) + 투표 앱 코어 개발(3.5~4.5 ⚠) + 웹툰·인터랙티브 연동 콘텐츠(1.2~1.5)</td>
+<td class="num">약 6.9~8.5억 상당</td>
+<td>캐릭터 IP 영구 소유(24+α) · 앱 BM(젬·스탯) · 시즌제·글로벌 재사용 · 웹툰 IP 사업 · 헌법 집행권</td></tr>
+<tr><td class="opt">LVNEXUS</td><td>기술·음악 투입<br><span style="color:var(--dim);font-size:11px;">"실력을 잰다"</span></td>
+<td>AI 보컬 심사 엔진·API 제공(정산 방식 미확정 ⚠) + 미션곡 편곡·데뷔 음원 제작·프로듀싱(박선주)</td>
+<td class="num">약 2~4억 상당 ⚠협의</td>
+<td>음원 RS · AI 툴 전 국민 레퍼런스(지망생 사업 모객) · API 사용료 정산 · 오디션 트랙레코드</td></tr>
+<tr class="total-row"><td class="opt">합계</td><td>—</td><td>3사 합산 총 사업 규모</td><td class="num">약 31~38억 상당</td><td>—</td></tr>
+</table>
+<div class="decision amber" style="margin-top:14px;">
+<div class="dk">협상 화법 — "판이 줄어든 게 아니라, 각자 자기 것에 투자하는 것"</div>
+치지직 청구가 30~35억 → A안 21.8~26.0억으로 내려간 것은 스코프 축소가 아니라 <b>IP 자산을 소유자가 부담하는 구조 정렬</b>의 결과다.
+협의 자리 화법: <b>"치지직은 쇼에만 투자하십시오. 캐릭터 IP와 앱은 우리 돈으로 만듭니다 — 그래서 IP도, 앱 BM도 우리 소유입니다.
+대신 그 IP의 방송 가치는 전부 치지직 독점으로 드립니다."</b> 7/6 판독("30억이면 30억 밸류만큼 요구할 것")에 대한 구조적 답변:
+치지직의 요구 근거가 되는 투입 자체를 방송 가치 영역으로 한정한다. LVNEXUS 투입분의 정산(현금 vs RS)은 3사 계약 협의 안건.
+</div>
+</section>
+
+<div class="mini-foot">PROJECT AWAKE(각성) · 비용 산출서 v0.2 (치지직 청구 기준 · 3사 투입) · 2026.07.13 · SUPERSTORY 스토리테크본부 · STRICTLY INTERNAL</div>
+</div></body></html>
