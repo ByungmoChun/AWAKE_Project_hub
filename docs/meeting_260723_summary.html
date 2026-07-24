@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project AWAKE — 회의 요약</title>
+<title>오디션 앱 회의 요약 — 2026.07.23</title>
 <style>
 :root{
   --bg:#0c0e14; --panel:#12151e; --panel2:#171b27; --line:#242a3a;
@@ -299,51 +299,144 @@ footer{margin-top:100px;border-top:1px solid var(--line);padding-top:20px;font-f
 .decision.amber{border-color:rgba(232,196,118,.4);background:rgba(232,196,118,.05);}
 .decision.amber .dk{color:var(--gold);}
 </style>
-<style>.backlink{display:inline-block;margin-bottom:18px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:.12em;}</style>
-</head><body><div class="wrap">
+<style>
+.dec-tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;padding:2px 8px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+.t-dec{color:#8fd8a8;border:1px solid rgba(143,216,168,.4);}
+.t-disc{color:#e8c476;border:1px solid rgba(232,196,118,.4);}
+.t-act{color:#9db8ff;border:1px solid rgba(157,184,255,.4);}
+.num{font-family:"IBM Plex Mono",monospace;white-space:nowrap;}
+</style>
+</head><body>
+<a href="../index.html" style="position:fixed;top:14px;left:16px;z-index:99;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:#e8c476;text-decoration:none;background:rgba(10,10,16,.85);padding:6px 12px;border:1px solid rgba(232,196,118,.35);border-radius:4px;">← PROJECT HUB</a><div class="wrap">
+
 <div class="mini-cover">
-<a class="backlink" href="../index.html">← PROJECT HUB</a>
-<div class="c-eyebrow">SUPERSTORY × LVNEXUS × CHZZK — VIRTUAL AUDITION PROJECT</div>
-<h1>회의 요약 <span class="kr">— MEETING LOG</span></h1>
-<div class="c-sub">Project AWAKE(각성) · 회의별 핵심 결정·시그널 요약</div>
-<div class="c-note">본 문서는 의사결정 추적용 요약이며, 우측 열에서 각 회의의 전체 회의록(STT 교정본)으로 이동한다. 회의록은 Google Docs로 연결된다(새 탭). 새 회의가 열리면 행과 링크를 추가한다.</div>
+<div class="c-eyebrow">SUPERSTORY × LVNEXUS — VIRTUAL AUDITION PROJECT</div>
+<h1>오디션 앱 회의 <span class="kr">— 상세 요약</span></h1>
+<div class="c-sub">2026.07.23 (수) · 참석: LVNEXUS 대표 + 슈퍼스토리 사업·기획·개발 총괄 · 원본: STT 교정본 (발화 331건)</div>
+<div class="c-note"><b>회의 성격</b> — ① 다음 주 치지직 사업부 오피셜 미팅 대비 자료·논리 정렬 ② 개발 총괄 합류 후 첫 통합 공유(AI 시스템·앱 구조 Q&amp;A).
+범례: <span class="dec-tag t-dec">DECIDED</span> 합의·결정 <span class="dec-tag t-disc">DISCUSSED</span> 논의·방향 <span class="dec-tag t-act">ACTION</span> 실행 항목.
+발화자 신원은 추정 — 인용 시 확인 필요.</div>
 </div>
 
 <section>
-<div class="sec-head"><span class="no">01</span><h2>회의 로그</h2></div>
-<table class="cmp">
-<tr><th style="width:90px;">일자</th><th style="width:180px;">회의</th><th>핵심 결정·시그널</th><th style="width:130px;">회의록</th></tr>
-<tr><td class="opt">7/1</td><td class="opt">초기 기획 미팅</td>
-<td>버추얼 오디션 원안 수립 — 24캐릭터 × 공개 무대 구도, 24→16→10→5 라운드안. (이후 봉인/각성 구조로 재설계됨 — 원안의 "캐릭터로 노래하는 경연"은 폐기)</td><td class="opt" style="white-space:normal;"><a href="https://docs.google.com/document/d/15yG11tLRE-qqI0cdn81jzCeG2d3k5icM882gLVmbALg/edit?usp=sharing" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;">미팅요약 1차 ↗</a></td></tr>
-<tr><td class="opt">7/2</td><td class="opt">전략회의<br>(SS × LVNEXUS)</td>
-<td>앱 베이스 = LVNEXUS I'M 앱 · 필수 기능 확정(AI 8축 분석·투표·꾸미기·NFT 원장·챗봇) · BM 축(유료 투표권·광고 무료 투표·시즌제) ·
-앱 심사 리스크(Apple 최대 2~3개월) → 앱 선등록 + 웹 병행 대응 · 버추얼 제작: 캐릭터당 2인 운용, 3D는 상위권부터(개당 3~4천만 원, 바디 공용화) ·
-참가자용 별도 앱 만들지 않음(단일 계정·역할 플래그)</td><td class="opt" style="white-space:normal;"><a href="https://docs.google.com/document/d/1Dy4EFzb2O4h2Q5k5qwCHvUT5aHyuuLzv-Tpib4e2-7c/edit?usp=drive_link" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;">회의록 2차 ↗</a></td></tr>
-<tr><td class="opt">7/6</td><td class="opt">네이버 치지직 사전미팅<br>(창민 대표 주선, 기술 리더)</td>
-<td>시그널 3: ① 기획안 + 정확한 금액을 찍어서 달라(가능성 타진 아님) ② 예산 미정 — 경영 보고부터, 규모 감은 협의 ③ 치지직 내부에도 자체 오디션 논의 존재(단독 부담 — 파트너 희망) ·
-링크(LVNEXUS 여성 그룹) 제외 확정 · 편성 스케일: 파일럿 8~10회 / 레귤러 12회, 회당 2~3시간 · 예선 = AI 스코어 + 버추얼 MC 앱 화면 송출(제작비 절감 긍정) ·
-서드파티 앱은 명분 필요 · 기존 치지직 스트리머 참여 요구(→ 7/7 참가 규정으로 답변 설계) · 결론: 드래프트로 사업 미팅 먼저</td><td class="opt" style="white-space:normal;"><a href="https://docs.google.com/document/d/1fpczxrNYlK3X0tz2hb6dpLd77BRDGVQuxsNoxjl5NRw/edit?usp=drive_link" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;">회의록 3차 ↗</a></td></tr>
-<tr><td class="opt">7/7~10</td><td class="opt">내부 설계 스프린트<br>(비대면·문서 작업)</td>
-<td>입 봉인 추가 · 분화 개념 폐기(표현의 차별화) · 마지막 붓 신설 · 승격(2D→3D) 신설 · 참가 규정(티어형 활동 전속 확정) ·
-검증·보호 프로토콜(실격 기준 3등급 포함) · "각성 방송 24회" 표기 정정(모먼트, 편성 미결 ⑪) · 원작 웹툰 IP 연동(B′ 하이브리드 연재) ·
-치지직 레드팀·제안서 드래프트(HTML+PPT) 산출</td><td class="opt" style="white-space:normal;"><span style="color:var(--dim);border:1px dashed var(--line);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;">해당 없음 — 산출물이 곧 기록</span></td></tr>
-<tr><td class="opt">7/21</td><td class="opt">PURPLE PILL<br>통합전략서 공유<br>(LVNEXUS 제작)</td>
-<td>LVNEXUS 측 전체 기획안 v9/10 수령 — 퍼플필 프레임(기존 빨간 약·파란 약 접근의 실패 원인 = 폼이 아닌 아이덴티티) · 치지직 제안 전 LV 조율의 기준 문서.
-7/23 회의에서 "숲(SOOP)의 친구들이 캐릭터를 버리고 넘어올 이유"의 원전으로 재인용됨.</td>
-<td class="opt" style="white-space:normal;"><a href="purple_pill_v9_10.html" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;margin:2px 0;">통합전략서 v9/10 ↗</a></td></tr>
-<tr><td class="opt">7/23</td><td class="opt">오디션 앱 회의<br>(LVNEXUS 대표 ·<br>개발 총괄 합류)</td>
-<td>매출 추정 <b>80~100억</b>(음원 최대 — 기존 대비 2.5배, 미스터트롯 300억 레퍼런스) · 계약 초안: <b>전속 3년+JV 귀속안 · 치지직 포지션 25%</b>(⚠지분 vs IP 관리권 — IP 원칙 충돌 검증 필요) · SPC 검토 ·
-동물 캐릭터 심사위원 리스닝 토크(당락은 AI — 공정성 분리) · <b>파일 업로드 차단·앱 라이브 녹음만</b> 확정 · 단일 앱 통합 + 외부 앱 정당성 논리 · 지표 공동 열람 RS 정산 ·
-프로세스 재배열(24 공개 = 방송 개시점) · 다음 주 치지직 오피셜 미팅(목요일 제외, LV 대표 화상)</td>
-<td class="opt" style="white-space:normal;"><a href="meeting_260723_summary.html" style="color:var(--gold);text-decoration:none;border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;margin:2px 0;">상세 요약 ↗</a><br><a href="LVxSS_proposal_20260723.pdf" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 8px;font-size:10.5px;font-family:'IBM Plex Mono',monospace;display:inline-block;margin:2px 0;">제안서 확정본 PDF (07.23) ↗</a></td></tr>
-</table>
+<div class="sec-head"><span class="no">01</span><h2>치지직 사업부 상황 — 미팅의 판이 어떻게 깔려 있나</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li>치지직 개발 리더·사업 총괄과 러프 미팅은 완료 — <b>"큰 이견 없음, 정식 안으로 만들어서 공유"</b> 단계까지 진행. 다음 주 <b>오피셜 미팅</b>이 잡히는 흐름.</li>
+<li>사업 담당의 상태: 니즈는 명확하나 <b>"이 예산을 쏟았을 때 무엇을 얻는지"를 회사(윗선)에 설명할 근거</b>가 필요한 상황. "안 돼도 재밌다, 좋은 일이다"라는 우호적 온도 + 네이버가 수익 지분을 크게 가져가는 그림은 부담스러워하는 분위기(사회적 시선).</li>
+<li>치지직 내부 사정: 이 사업의 전담 담당자·매니지먼트 팀·제작 팀이 없음 — <b>"정교한 계획을 갖고 시작한 게 아니다"</b>(치지직 팀 스스로 방법을 모른다고 함) → 우리가 구조를 제시하는 쪽이 판을 쥔다.</li>
+<li>성수동 미팅 맥락 재확인: 치지직 측이 먼저 "오디션 니즈가 있었다"고 발언 — 트래픽 성장 + 인스파이어(?) 공연장 연계 + "오디션 많이 해 본 사람이 들고 왔으니 안 할 이유 없다" + 음원 제작 내재가 장점이라는 반응까지 확보된 상태.</li>
+<li><span class="dec-tag t-disc">DISCUSSED</span> 윗선 설득의 킬러 프레임: <b>"경쟁 구도에서 치지직 쪽으로 (탤런트가) 넘어오는 그림"</b> — SOOP은 생태계 정체(?), 치지직은 투자 확장 국면이라는 대비 위에서 오디션이 유입 장치가 된다는 그림을 장표로 — "윗사람이 제일 좋아할 것".</li>
+</ul>
 </section>
 
 <section>
-<div class="sec-head"><span class="no">02</span><h2>다음 회의 안건 후보</h2></div>
-<p class="sec-lede">① PPT 드래프트 6개 섹션 검토(LVNEXUS·각 담당) ② 편성 스케일·각성 모먼트 배치(검증 최소 기간 전제) ③ 데뷔조 계약 구조·독점 라이선스 텀시트
-④ LVNEXUS AI API 스펙 회신 반영(Q1~Q5) ⑤ 비용 산출서 프레임 확정(§5) ⑥ 원작 웹툰 3작품 슬롯 배분·원작자 계약 조항.</p>
+<div class="sec-head"><span class="no">02</span><h2>오디션 프로세스 — 순서 재정렬 합의</h2></div>
+<table class="cmp">
+<tr><th style="width:120px;">단계</th><th>내용</th><th style="width:220px;">비고</th></tr>
+<tr><td class="opt">모집·예선</td><td>온라인 접수 → <b>AI 보컬 분석으로 전원 1차 심사</b>(100~200명 리스트업은 내부 데이터, 비공개). 무대·현장 예선 없음 — 제작비 구조적 절감.</td><td>예선 = 앱 구간</td></tr>
+<tr><td class="opt">심사 토크</td><td>심사위원(동물 캐릭터)들이 AI 분석 결과·음원을 들으며 토크 → <b>방송 1~3편</b>으로 편집. 반응 좋으면 분량 확대.</td><td>§04 상세</td></tr>
+<tr><td class="opt">24 공개</td><td>"○만 명이 지원했고, 최고의 아티스트들이 24명을 선발했습니다" — <b>캐릭터 공개 + 매칭(각성)</b>. 여기서부터가 대중 인지 기준 방송 시작.</td><td style="color:#8fd8a8;">방송 개시점 합의</td></tr>
+<tr><td class="opt">24 → 16</td><td>가볍게 거름. 16 구간 단독 편성은 큰 의미 없음 — 속도 조절용.</td><td>리메이크 곡 구간</td></tr>
+<tr><td class="opt">16 → 10</td><td>미션 본격화 + <b>버추얼 제작 투입 시점</b>. 팀전(4×4)·에이스전·데스매치 구조 가동, <b>신곡 투입 시작(인당 최대 4곡)</b>.</td><td>§05 수익과 직결</td></tr>
+<tr><td class="opt">10 → 5 데뷔</td><td>방송 포맷 본편 + 라이브 방송(방송 체력·인성 검증 — "하루 몇 시간 방송을 버티는지"). TOP10 버추얼 아티스트 제작 → 최종 5인 데뷔, 비데뷔 19인은 버튜버랜드로.</td><td>라이브 편성은 제작 환경 보고 결정</td></tr>
+</table>
+<p class="stat-note"><span class="dec-tag t-dec">DECIDED</span> 기존 장표의 스텝 순서 오류 확인 — <b>보컬·퍼포먼스 트레이닝, 미션 수행은 뒤(24명 매칭 이후)로 이동</b>, 앱 오픈 시점도 재배치. 대형 라이브 오디션(예선 현장 심사)은 "품이 많이 들고 재미없고 의미 없다"로 배제 확정.</p>
 </section>
 
-<div class="mini-foot">PROJECT AWAKE(각성) · 회의 요약 · 2026.07.10 · SUPERSTORY 스토리테크본부</div>
+<section>
+<div class="sec-head"><span class="no">03</span><h2>AI 보컬 분석 — 예선 엔진의 실체 (개발 Q&amp;A)</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><b>8팩터 분석</b>: 발성 · 발음 · 음정 · 감정 · 톤/표현 · 파형 · 볼륨(레인지) · 텍스처(목소리의 굵기·질감) ※ 두 차례 언급된 리스트에 차이가 있어 <b>최종 8개 항목 문서 확인 필요</b> — 개발 총괄이 명시 요청(유저 참여 팩터 설계의 선행 조건).</li>
+<li><b>대조 기준</b>: 보컬 100명 리스트업 → 탑클래스 남/녀 10인 선정, K-POP 계열(정국 등)·발라드 계열(김나박이) 2트랙. 분석 2~3분 → "너는 ○○와 닮았고 레벨 3이며, 격차를 줄이려면 이 트레이닝" 결과 즉시 출력.</li>
+<li><b>지향점</b>: 레코드 아티스트 선발(라이브 아티스트 아님) — 마이크가 받는 목소리를 파형·주파수로 판별하는 설계 철학.</li>
+<li><b>트레이닝 루프</b>: 발성·브레스·리듬 등 5종 연습의 게임화 → 데일리 연습 → 재측정 시 레벨 변동. 레벨 인증은 <b>블록체인 서티피케이션</b>으로 외부 반출 가능.</li>
+<li><span class="dec-tag t-dec">DECIDED</span> <b>공정성 통제: 파일 업로드 기능 차단, 앱 내 라이브 녹음만 허용</b> — 오토튠·보정 업로드 어뷰징 원천 차단(사업 측 리스크 지적 → 즉답 합의). 후반 라이브 무대에서 재검증되는 이중 구조.</li>
+<li><b>가동 실적</b>: 보컬 캠프에서 학생 30명 운용 중, 데이터 700건+ 축적. 어드민 화면 시연 가능.</li>
+<li><span class="dec-tag t-disc">DISCUSSED</span> <b>기술 경계(민감)</b>: LVNEXUS 대표 — "제 기술이라 민감한 부분, 별도 협의 필요." 코드 비공개, <b>API 연동만</b>(화면 임베드 수준, 데이터 크로스 리딩 없음). AI 보컬 트레이닝 발생 매출은 별도 지표로 분리 정산.</li>
+</ul>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">04</span><h2>심사위원 설계 — 동물 캐릭터 리스닝 토크</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><b>컨셉</b>: 심사위원 전원에게 <b>동물 캐릭터</b>를 입힘 — "동물 심판들이 사람을 평가한다." 누가 들어도 아는 목소리(딱 들어도 김범수)의 익명성 게임 = 목소리 맞히기 놀이 자체가 콘텐츠.</li>
+<li><b>섭외 후보(안)</b>: 김범수 · 김태우 · 박선주 · 에일리 + 거미(?) · 조권(?) · 정진운(?) 등 5~6인 — 보컬 중심 구성(이번 시즌은 "노래로 간다" 확정, 평가축 분산 방지).</li>
+<li><b>포맷</b>: AI 분석 결과와 음원을 함께 들으며 수다("얘 좋은데?", "이 목소리 ○○ 닮지 않았어?") — 당락은 AI가, 심사위원은 <b>발견·리액션 레이어</b>. 대본·큐시트 필요(엠넷 팀 조언).</li>
+<li><b>바이럴 설계</b>: 심사위원 각자의 유튜브 채널에 클립 배포("노래는 이렇게 하는 게 아니고 —" 시범 밈), 릴스 제작 → 방송 전 사람몰이. 프로모션 영상은 심사진 확정 즉시 촬영.</li>
+<li><span class="dec-tag t-disc">DISCUSSED</span> 예선 공백 문제(치지직 개발 측 지적: "방송 전 구간에 보여줄 게 없다") → 심사 토크 영상이 그 공백을 채우는 답으로 정리.</li>
+</ul>
+<p class="stat-note">엠넷(슈퍼스타K 제작진) 자문 요지 — ① 심사위원이 너무 커지는 오디션은 금물: 토크는 짧게 치고 빠지고 이후 녹화 편성 ② 초반 팬 투표 비중은 작게(코어 팬덤 편중 왜곡) ③ 오디션 판매 단위는 8~10편 ④ 라이브도 결국 편집본 송출 — 처음부터 콘티를 짜고 들어갈 것 ⑤ 전 과정 "무조건 다 찍고 쌓고 가라".</p>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">05</span><h2>수익 모델 — "음원이 제일 크다"</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><b>음원 파이프라인</b>: 24명이 매주 부르는 곡을 음원 사이트에 전량 오픈 — 시즌 내 최소 100곡+, 구조에 따라 수백 곡("우리의 뮤직 라이브러리가 생긴다"). 24~16 리메이크 → <b>16부터 신곡(자기 곡)</b>, 팀 미션·데스 미션으로 인당 최대 4곡 — "얘는 가수가 돼 버린다."</li>
+<li><b>버추얼 특유의 증폭</b>: 기존 오디션 음원은 방송 종료와 함께 소멸하지만, 여기는 버튜버랜드에서 활동이 계속되며 자기 곡을 계속 부름 → 음원 수익 <b>기존 대비 약 2.5배</b> 예상(발화자 1 추정).</li>
+<li><span class="dec-tag t-dec">DECIDED</span> <b>곡 마스터 능력을 평가 기준에 포함</b> — "24명부터 미션 곡을 주고, 마스터 못 해 오면 떨어뜨린다"(새로 태어난 존재이므로 가능한 기준). 풀송이 아닌 파트 릴리즈 옵션도 검토.</li>
+<li><b>커머스 연계</b>: 투표 → 굿즈 실물 배송 등 커머스 연결(네이버 AI 커머스 시연 참조), 24명 활동 구간은 유료화보다 <b>회원화·로그인 우선</b> 검토.</li>
+<li><b>총매출 추정: 80~100억</b>(공연·해외 포함, 발화자 1의 오디션 경험 역산 — "거의 틀리지 않을 것").</li>
+<li><b>레퍼런스</b>: 미스터트롯1(임영웅) 1년 반 활동 매출 300억+ / 미스트롯1(송가인) 약 180억 / 슈퍼스타K 1·2 126~128억, 슈스케2 국민은행 협찬 15~18억. <b>셀링 포인트는 미스터트롯 — 슈스케는 너무 오래돼 샘플로 부적합.</b></li>
+</ul>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">06</span><h2>예산 — 치지직의 감(勘) 재확인</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><span class="dec-tag t-disc">DISCUSSED</span> 치지직 리더의 머릿속 예산: <b>약 20~25억</b>(지난 미팅 체감 — "기술 기업, 기술 기능이 들어간 것"을 강조하는 화법). 장표의 <b>인프라 10억은 치지직 측이 스스로 언급한 수치</b>를 반영한 것.</li>
+<li>현 산출은 "넉넉하게 잡은 것 — 더 줄일 수 있다"(발화자 1). 변수는 ① 앞단 서비스(앱) 구축 범위 ② <b>심사위원 출연료</b>(출연료형 vs 지속 활동형 — 섭외 협상에 따라 변동). 제작비는 정해진 가격대.</li>
+<li>스폰서십 가능성 언급(슈스케2 국민은행 선례) — 예산 프레임의 보조 축.</li>
+</ul>
+<p class="stat-note">※ 우리 비용 산출서 v0.2와의 정합 — 치지직 감(20~25억)은 산출서 B안 청구(17.4~21.4억)~A안 하단(21.8~)과 겹침. 오늘 회의에 v0.2 프레임("치지직은 쇼에만 투자")을 흔드는 발언은 없음.</p>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">07</span><h2>계약·지분 구조 — 처음 나온 굵직한 안들</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><b>전속 기간</b>: 슈스케 시절 관행 6개월~1년 → 수익이 커지며 연장됐고 "뒤에 문제가 생기는" 구조였다는 경험칙. <span class="dec-tag t-disc">DISCUSSED</span> 발화자 1 제안: <b>3년 전속 + 3년 후 JV(조인트벤처) 귀속</b> — "3년이면 3D 리깅·렌더링 기술이 다 해결되고, 버추얼은 (사람과 달리) 혼자 독립을 못 하므로 통으로 가져가는 그림."</li>
+<li><b>치지직 몫</b>: 제작비·전반 구조 기준 <b>포지션 약 25%</b> — 25%에 대한 권리와 IP 관리를 귀속시키는 안. ※ 발언 맥락상 '수익 지분 25%'인지 'IP 관리권'인지 원문이 모호 — <b>우리 IP 원칙(이전 불가·대여 보전)과 충돌 여부 정밀 확인 필요.</b></li>
+<li><b>배분 철학</b>: 기존 오디션 관행이면 LVNEXUS가 70%+ 가져가는 구조지만 "의미 없다 — <b>페어하게 나누자</b>"(발화자 1). 전체의 20~25(%)를 먼저 결정하고 잔여를 상호 배분하는 프레임 언급.</li>
+<li><b>매니지먼트</b>: 네이버 내부 신설은 비현실적(팀 없음) → <b>외부 대행 + 플러그인</b> 방식. 당분간은 기술 수급을 위해 네이버 축으로 두는 게 낫다는 의견(사업 측).</li>
+<li><span class="dec-tag t-disc">DISCUSSED</span> <b>SPC 설립 검토</b> — "매출 구조·수익 셰어를 생각할수록 SPC 없이는 나누기가 만만치 않다"(사업 측). 당장은 보류, 구조 확정 후 재론.</li>
+<li>시즌제 전제 재확인: 시즌1로 끝나는 사업이 아님 — "여성으로 시작했으면 (차기는) 남성" 등 반복 구조.</li>
+</ul>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">08</span><h2>앱·플랫폼 구조 — 단일 앱 원칙과 외부 앱의 정당성</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><span class="dec-tag t-dec">DECIDED</span> <b>단일 앱 통합</b>: 투표권 구매 · 아이템 · 상점 · 선물 전부 한 앱에서 해결(분리 시 유저·운영 모두 불편, 앱 2개 설치 비현실) → <b>매출이 우리 앱으로 계상</b>되고 지표가 남는 구조. 시즌 종료 후에도 매출이 지속되는 방향.</li>
+<li><b>지표·정산</b>: 서버 지표는 공동 열람("한 회사가 장난칠 수 없는" 구조) — RS 관련 내용을 지표 기반으로 정산, AI 보컬 트레이닝 발생분은 분리 계상.</li>
+<li><b>치지직 투표 시스템의 실체</b>: 내부에 방송용 투표 시스템 없음('좋아요' 수준) — 자체 하려면 그쪽도 신규 개발. <b>외부 앱의 정당성 논리</b>: 대기업이 자체 투표 시스템으로 순위를 매기면 공정성 시비 부담 → "외부에 던져놓는 게 정당성" — 치지직 설득 화법으로 채택.</li>
+<li>치지직에는 "외부 앱으로 한다"는 아이디어까지 전달된 상태 — 최종 수용은 다음 미팅 협의 대상("당위성만 주면 될 것").</li>
+<li>광고 시스템은 기존 구조 유지 확인.</li>
+</ul>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">09</span><h2>시장 프레임 — 퍼플필과 탤런트 유입</h2></div>
+<ul style="line-height:1.9;margin-left:18px;">
+<li><b>퍼플필(PURPLE PILL) 핵심 재천명</b>(발화자 1): 기존의 빨간 약·파란 약(기존 접근 두 갈래)이 계속 실패한 이유 — 오디션의 폼이 아니라 <b>아이덴티티</b>가 달라야 하며, "숲(SOOP)의 친구들이 자기 캐릭터를 버리고 여기 들어와야 할 이유"를 줘야 판이 모인다.</li>
+<li>사업 측 요구: 이 유입 구조를 <b>텍스트가 아니라 다이어그램/이미지</b>로 — 시장 지도(숲에 있는 층·잠재층·신규 유저)와 트래픽 이동 그림. "보내드린 자료에 있다 — 그걸 활용하라"(발화자 1).</li>
+</ul>
+<p class="stat-note">※ 오늘 제작한 LVxSS 제안서 v2의 신규 2장(셀럽 리스닝 토크 · 탤런트 유입 브리지)이 이 회의의 두 축과 정확히 일치 — 회의 후속 장표 수정의 출발점으로 사용 가능.</p>
+</section>
+
+<section>
+<div class="sec-head"><span class="no">10</span><h2>액션 아이템 &amp; 일정</h2></div>
+<table class="cmp">
+<tr><th style="width:60px;">#</th><th>항목</th><th style="width:170px;">담당(추정)</th></tr>
+<tr><td class="opt">1</td><td><span class="dec-tag t-act">ACTION</span> 장표 수정 — 스텝 순서 재배열(트레이닝·미션 후행) · 동물 심사위원 컨셉 1장 신설 · 기대효과 도식화(불릿+다이어그램) · 시장 유입 다이어그램 · 팬덤 현상 이미지</td><td>슈퍼스토리 기획</td></tr>
+<tr><td class="opt">2</td><td><span class="dec-tag t-act">ACTION</span> <b>매출 시뮬레이션 신규 작성</b> — RS 평균치 계약 기준, 항목별(음원·광고·커머스·공연·MD) 발생 규모 + 기존 사례 레퍼런스 표(미스터트롯 300억+ 중심)</td><td>사업 + ○○ PD(?) 협의</td></tr>
+<tr><td class="opt">3</td><td><span class="dec-tag t-act">ACTION</span> AI 8팩터 최종 리스트 문서화 — 유저 참여 팩터 설계의 선행 조건</td><td>LVNEXUS → 개발 총괄</td></tr>
+<tr><td class="opt">4</td><td><span class="dec-tag t-act">ACTION</span> AI API 연동 방식 협의 개시(코드 비공개 전제·정산 분리)</td><td>LVNEXUS · 개발</td></tr>
+<tr><td class="opt">5</td><td><span class="dec-tag t-act">ACTION</span> 오늘 내용 반영해 자료 업데이트 → 공유 → <b>다음 주 치지직 오피셜 미팅</b>(목요일 제외 일정 조율, LVNEXUS 대표는 화상 참석)</td><td>슈퍼스토리 사업</td></tr>
+</table>
+<div class="decision amber" style="margin-top:14px;">
+<div class="dk">미결·확인 필요 (이번 회의발)</div>
+① 라이브 방송 시작점(24 vs 10) — 제작 환경 보고 결정 ② 심사위원 계약 형태(출연료 vs 지속 활동) ③ "치지직 25% 권리·IP 관리" 발언의 정확한 범위 — <b>우리 IP 원칙과 충돌 여부 검증 필수</b> ④ 전속 3년+JV 안의 내부 입장 정리(레드팀 문서와 대조) ⑤ SPC 설립 시점 ⑥ 심사위원 후보 실명(거미·조권·정진운은 STT 추정) ⑦ 편성 총 편수(8~10편)와 각성 24모먼트 배치의 정합.
+</div>
+</section>
+
+<div class="mini-foot">오디션 앱 회의 상세 요약 · 2026.07.23 · 원본: STT 교정본 · SUPERSTORY 스토리테크본부 · INTERNAL</div>
 </div></body></html>
